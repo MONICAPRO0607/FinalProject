@@ -1,6 +1,6 @@
 body {
   font-family: 'Quicksand', sans-serif;
-  background: linear-gradient(to bottom right, #ffe4e6, #fff);
+  background: linear-gradient(to bottom right, #a4b4f8, #fff);
   margin: 0;
   color: #444;
   overflow-x: hidden;
@@ -21,7 +21,7 @@ body {
 h1 {
   font-family: 'Great Vibes', cursive;
   font-size: 3rem;
-  color: #c2185b;
+  color: #22049c;
   margin-bottom: 1rem;
   letter-spacing: 1px;
 }

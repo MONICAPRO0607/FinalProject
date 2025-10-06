@@ -30,7 +30,7 @@
 }
 .navbar a:hover {
   color: #880e4f;
-  transform: scale(1.08);
+   transform: scale(1.08);
 }
 
 .navbar li.active a {

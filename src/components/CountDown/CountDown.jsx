@@ -4,6 +4,7 @@ import './Countdown.css'
 const Countdown = () => {
   const [timeLeft, setTimeLeft] = useState({})
   const [typed, setTyped] = useState('')
+  const [showCursor, setShowCursor] = useState(true)
 
   useEffect(() => {
     const calculateTimeLeft = () => {
@@ -39,7 +40,10 @@ const Countdown = () => {
       if (i < full.length) {
         setTyped(prev => prev + full[i])
       } else {
-        clearInterval(t)}}, 80) 
+        clearInterval(t)
+        setTimeout(() => setShowCursor(false), 1000)
+      }
+    }, 80)
     return () => clearInterval(t)
   }, [])
 
@@ -58,7 +62,9 @@ const Countdown = () => {
         <p>¡Ya llegó el gran día! 🎉</p>
       )}
 
-      <p className="typing-text-js">{typed}</p>
+      <p className={`typing-text-js ${showCursor ? 'show-cursor' : ''}`}>
+        {typed}
+      </p>
     </div>
   )
 }

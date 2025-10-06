@@ -64,8 +64,11 @@
   font-style: italic;
   letter-spacing: 1px;
   display: inline-block;
-  border-right: 2px solid #ad1457;
   padding-right: 4px;
+}
+
+.show-cursor {
+  border-right: 2px solid #ad1457;
   animation: blink 0.8s step-end infinite;
 }
 

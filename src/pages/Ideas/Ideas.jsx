@@ -1,8 +1,13 @@
-export default function Ideas() {
+import React from 'react'
+import './Ideas.css'
+
+const Ideas = () => {
   return (
-    <div className="page">
-      <h2>Ideas 💡</h2>
-      <p>Comparte ideas para la boda o la luna de miel.</p>
+    <div className="ideas">
+      <h1 className="names">Ideas y Recuerdos</h1>
+      <p>Pequeños detalles que hacen grande el amor.</p>
     </div>
-  );
+  )
 }
+
+export default Ideas

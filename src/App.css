@@ -1,5 +1,5 @@
 body {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Playfair Display', serif;
   background: linear-gradient(to bottom right, #a4b4f8, #fff);
   margin: 0;
   color: #444;
@@ -29,6 +29,21 @@ h1 {
 h2 {
   color: #ad1457;
   transition: color 0.3s;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #c2185b;
+}
+
+.names {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3.5rem;
+  color: #22049c;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
 }
 
 p {

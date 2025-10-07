@@ -7,6 +7,7 @@ import History from './pages/History/History'
 import EventDay from './pages/Eventday/EventDay'
 import Guests from './pages/Guest/Guest'
 import Gifts from './pages/Gifts/Gifts'
+import Gratitudes from './pages/Gratitudes/Gratitudes'
 import Dedications from './pages/Dedications/Dedications'
 import Ideas from './pages/Ideas/Ideas'
 import Pictures from './pages/Pictures/Pictures'
@@ -23,6 +24,7 @@ const AnimatedRoutes = () => {
         <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
         <Route path="/history" element={<PageWrapper><History /></PageWrapper>} />
         <Route path="/event" element={<PageWrapper><EventDay /></PageWrapper>} />
+        <Route path="/gratitudes" element={<PageWrapper><Gratitudes /></PageWrapper>} />
         <Route path="/guests" element={<PageWrapper><Guests /></PageWrapper>} />
         <Route path="/gifts" element={<PageWrapper><Gifts /></PageWrapper>} />
         <Route path="/dedications" element={<PageWrapper><Dedications /></PageWrapper>} />

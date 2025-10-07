@@ -1,8 +1,13 @@
-export default function Pictures() {
+import React from 'react'
+import './Pictures.css'
+
+const Pictures = () => {
   return (
-    <div className="page">
-      <h2>Galería 📸</h2>
-      <p>Sube o mira las fotos de la boda y los preparativos.</p>
+    <div className="pictures">
+      <h1 className="names">Nuestros Momentos</h1>
+      <p>Fotos que guardan historias para siempre 💞</p>
     </div>
-  );
+  )
 }
+
+export default Pictures

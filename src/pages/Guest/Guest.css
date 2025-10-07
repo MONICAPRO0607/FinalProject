@@ -1,0 +1,107 @@
+.guests-page {
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.guest-card {
+  margin-top: 20px;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.guest-card h2 {
+  text-align: center;
+  margin-top: 0;
+}
+
+.guest-card p {
+  margin: 8px 0;
+}
+
+.guest-card label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.guest-card input,
+.guest-card select,
+.guest-card textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  resize: none;
+}
+
+.guest-card select {
+  appearance: none;
+}
+
+.guest-card textarea {
+  min-height: 60px;
+}
+
+.save-btn {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+  background: #e91e63;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.save-btn:hover {
+  background: #d81b60;
+}
+
+p.no-result {
+  text-align: center;
+  margin-top: 20px;
+  font-style: italic;
+  color: #555;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .guest-card {
+    padding: 15px;
+  }
+
+  .search-input {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .save-btn {
+    font-size: 14px;
+    padding: 10px;
+  }
+}

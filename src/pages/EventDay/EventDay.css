@@ -1,0 +1,64 @@
+.event-page {
+  padding: 2rem;
+  font-family: 'Quicksand', sans-serif;
+  text-align: center;
+}
+
+.event-page h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.5rem;
+  color: #c2185b;
+  margin-bottom: 1rem;
+}
+
+.eventday-page p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.map-container {
+  margin: 2rem auto;
+  margin-bottom: 2rem;
+  max-width: 90%;
+  border: 2px solid #c2185b;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  padding-bottom: 56.25%; 
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  background: transparent;
+}
+
+.map-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.visit-finca-btn {
+  display: inline-block;
+  background-color: #c2185b;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 2rem;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.visit-finca-btn:hover {
+  background-color: #880e4f;
+  transform: scale(1.05);
+}
+.typing-text-js {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2rem;
+  color: #22049c;
+  margin-bottom: 1rem;
+  min-height: 50px; 
+}

@@ -45,6 +45,10 @@ h1, h2, h3 {
   color: var(--color-letter-secundary);
 }
 
+.titles {
+  font-family: 'Playfair Display', serif;
+}
+
 .names {
   font-family: 'Great Vibes', cursive;
   font-size: 3.5rem;

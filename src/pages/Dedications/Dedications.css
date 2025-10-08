@@ -1,0 +1,101 @@
+.dedications {
+  padding: 2rem;
+  max-width: 800px;
+  margin: auto;
+}
+
+.titles {
+  font-family: 'Playfair Display', serif !important;
+  text-align: center;
+  font-weight: 600;
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  color: var(--color-letter-primary);
+}
+
+.dedications .titles {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+}
+
+.dedication-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  background: rgba(255, 240, 245, 0.5);
+  padding: 1.8rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.dedication-form label {
+  font-weight: 600;
+}
+
+.dedication-form input,
+.dedication-form textarea {
+  padding: 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 95%;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.dedication-form button {
+  background: var(--color-letter-secundary);
+  color: white;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.dedication-form button:hover {
+  background: var(--color-letter-secundary);
+}
+
+.dedication-list {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.dedication-card {
+  background: white;
+  padding: 1.2rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.dedication-card img {
+  font-family: 'Playfair Display', serif;
+  max-width: 100%;
+  border-radius: 6px;
+  margin-top: 0.8rem;
+}
+
+.dedication-file {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+  .titles {
+    font-size: 1.8rem;
+  }
+
+  .dedication-form {
+    padding: 1rem;
+  }
+
+  .dedication-form input,
+  .dedication-form textarea {
+    font-size: 0.95rem;
+  }
+}

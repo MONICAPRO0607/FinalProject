@@ -1,0 +1,71 @@
+.gifts {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
+  font-family: 'Playfair Display', serif;
+}
+
+.names {
+  font-size: 2.5rem;
+  text-align: center;
+  color:var(--color-letter-secundary);
+  margin-bottom: 1rem;
+}
+
+.intro {
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.gift-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.gift-card {
+  flex: 1 1 300px;
+  background: rgba(255, 240, 245, 0.7);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.gift-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.icon {
+  font-size: 1.5rem;
+  color: var(--color-letter-secundary);
+}
+
+.gift-card h2 {
+  color: var(--color-letter-secundary);
+  font-size: 1.5rem;
+}
+
+.gift-card p {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+strong {
+  display: block;
+  margin-top: 0.5rem;
+  color: #a31649;
+}
+
+@media (max-width: 800px) {
+  .gift-options {
+    flex-direction: column;
+    align-items: center;
+  }
+}

@@ -1,45 +1,72 @@
 .guests-page {
-  padding: 20px;
-  max-width: 600px;
+  padding: 40px 20px;
+  max-width: 700px;
   margin: auto;
-  font-family: Arial, sans-serif;
+  text-align: center;
+  color: var(--color-letter-primary);
 }
 
-h1 {
+.guests-page > h1 {
+  font-size: 2.2rem;
+  color: var(--color-letter-primary);
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  position: relative;
+  display: inline-block;
+}
+
+.guests-page > h1::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 2px;
+  background-color: var(--color-letter-secundary);
+  margin: 10px auto 0;
+  border-radius: 2px;
 }
 
 .search-input {
   width: 100%;
   padding: 12px;
   font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 8px;
   box-sizing: border-box;
+  margin-bottom: 20px;
+  transition: all 0.2s ease-in-out;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--color-letter-secundary);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .guest-card {
-  margin-top: 20px;
-  background: #f9f9f9;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  background: #fdfdfd;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  text-align: left;
 }
 
 .guest-card h2 {
   text-align: center;
   margin-top: 0;
+  color: var(--color-letter-secundary);
+  font-size: 1.5rem;
 }
 
 .guest-card p {
   margin: 8px 0;
+  color: #444;
+  line-height: 1.4;
 }
 
 .guest-card label {
   display: block;
   margin-top: 15px;
   font-weight: bold;
+  color: var(--color-letter-primary);
 }
 
 .guest-card input,
@@ -50,36 +77,33 @@ h1 {
   margin-top: 5px;
   font-size: 15px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 8px;
   box-sizing: border-box;
   resize: none;
-}
-
-.guest-card select {
-  appearance: none;
+  font-family: inherit;
 }
 
 .guest-card textarea {
-  min-height: 60px;
+  min-height: 70px;
 }
 
 .save-btn {
   display: block;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 25px;
   padding: 12px;
-  background: #e91e63;
+  background: var(--color-letter-secundary);
   color: white;
   font-size: 16px;
   font-weight: bold;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background 0.3s ease;
 }
 
 .save-btn:hover {
-  background: #d81b60;
+  background: var(--color-letter-secundary);
 }
 
 p.no-result {
@@ -89,8 +113,15 @@ p.no-result {
   color: #555;
 }
 
-/* RESPONSIVE */
 @media (max-width: 600px) {
+  .guest-card {
+    padding: 20px;
+  }
+
+  .guests-page > h1 {
+    font-size: 1.8rem;
+  }
+
   .guest-card {
     padding: 15px;
   }

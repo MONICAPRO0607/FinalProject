@@ -1,6 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Great+Vibes&display=swap');
+
+:root {
+  --background-color-primary: linear-gradient(to bottom right, #a4b4f8, #fff);
+  --color-letter-primary: #22049c;
+  --color-letter-secundary: #c2185b;
+}
+
 body {
   font-family: 'Playfair Display', serif;
-  background: linear-gradient(to bottom right, #a4b4f8, #fff);
+  background: var(--background-color-primary);
   margin: 0;
   color: #444;
   overflow-x: hidden;
@@ -19,15 +27,14 @@ body {
 }
 
 h1 {
-  font-family: 'Great Vibes', cursive;
   font-size: 3rem;
-  color: #22049c;
+  color: var(--color-letter-primary);
   margin-bottom: 1rem;
   letter-spacing: 1px;
 }
 
 h2 {
-  color: #ad1457;
+  color: var(--color-letter-secundary);
   transition: color 0.3s;
 }
 
@@ -35,13 +42,13 @@ h1, h2, h3 {
   font-family: 'Playfair Display', serif;
   font-weight: 600;
   letter-spacing: 0.5px;
-  color: #c2185b;
+  color: var(--color-letter-secundary);
 }
 
 .names {
   font-family: 'Great Vibes', cursive;
   font-size: 3.5rem;
-  color: #22049c;
+  color: var(--color-letter-primary);
   letter-spacing: 1px;
   margin-bottom: 0.5rem;
 }

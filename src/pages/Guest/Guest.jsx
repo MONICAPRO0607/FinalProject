@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Guest.css";
 
-function Guests() {
+const Guests = () => {
   const [search, setSearch] = useState("");
   const [guest, setGuest] = useState(null);
   const [guests, setGuests] = useState([]);

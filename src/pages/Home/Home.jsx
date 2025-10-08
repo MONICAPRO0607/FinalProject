@@ -1,7 +1,7 @@
 import Countdown from '../../components/CountDown/countDown';
 import './Home.css';
 
-export default function Home() {
+const Home = () => {
   return (
    <div className="home">
      <h1 className="names">Paula y Quique</h1>
@@ -16,3 +16,5 @@ export default function Home() {
     </div>
   )
 };
+
+export default Home;

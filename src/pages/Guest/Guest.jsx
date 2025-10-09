@@ -52,7 +52,7 @@ const Guests = () => {
 
   return (
     <div className="guests-page">
-      <h1>Confirma tu asistencia</h1>
+      <h1 className="names">Confirma tu asistencia</h1>
       <input
         type="text"
         placeholder="Buscar tu nombre..."

@@ -58,8 +58,8 @@ const Dedications = () => {
 
   return (
     <div className="dedications">
-      <h1 className="titles">Dedicatorias</h1>
-
+      <h1 className="names">Dedicatorias</h1>
+      <p>Nos hace mucha ilusión que nos dediques un mensaje, tu mejor recuerdo con nosotros o alguna imagen que quieras que guardemos para siempre. 💞</p>
       <form className="dedication-form" onSubmit={handleSubmit}>
         <label>
           Tu nombre:
@@ -84,7 +84,7 @@ const Dedications = () => {
           Añadir texto o archivo:
           <input
             type="file"
-            accept="image/*,video/*,.pdf,.txt"
+            accept="image/*,video/*,.pdf,.txt,.jpg,.png"
             onChange={handleFileChange}
           />
         </label>
@@ -100,7 +100,7 @@ const Dedications = () => {
             <p>{d.message}</p>
             {d.file && (
               <div className="dedication-file">
-                <p>Archivo adjunto: {d.fileName}</p>
+                <p> Archivo adjunto: {d.fileName}</p>
                 {d.file.startsWith("data:image") ? (
                   <img src={d.file} alt="Archivo adjunto" />
                 ) : (

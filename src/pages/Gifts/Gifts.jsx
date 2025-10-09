@@ -7,7 +7,7 @@ const Gifts = () => {
     <div className="gifts">
       <h1 className="names">Regalos con Amor</h1>
       <p className="intro">
-        Tu presencia es el mejor regalo. Si deseas contribuir, aquí tienes nuestras ideas y opciones:
+        Tu presencia es el mejor regalo pero si aún así te empeñas en regalarnos algo y no lo tienes claro, aquí dejamos algunas de nuestras ideas y opciones:
       </p>
 
       <div className="gift-options">

@@ -28,6 +28,7 @@ const History = () => {
   return (
     <div className="history-page">
       <h1 className="names">Nuestra historia</h1>
+      <p>Pequeños detalles que hacen grande el amor.</p>
       <div className="timeline">
         {sections.map((item, index) => (
           <div

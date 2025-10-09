@@ -1,0 +1,130 @@
+.ideas {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.titles {
+  font-family: 'Playfair Display', serif;
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 1.2rem;
+  color: var(--color-letter-primary);
+}
+
+.intro {
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #555;
+}
+
+.ideas-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: rgba(255, 240, 245, 0.5);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: left;
+}
+
+.ideas-form label {
+  font-weight: 600;
+  color: var(--color-letter-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.ideas-form input,
+.ideas-form textarea,
+.ideas-form select {
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 100%;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.ideas-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.ideas-form button {
+  background: var(--color-letter-secundary);
+  color: white;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+  align-self: center;
+  width: 50%;
+}
+
+.ideas-form button:hover {
+  background: #a0164a;
+  transform: scale(1.03);
+}
+
+.ideas-list {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.idea-card {
+  background: white;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: left;
+}
+
+.idea-card h3 {
+  color: var(--color-letter-secundary);
+  margin-bottom: 0.4rem;
+  font-size: 1.2rem;
+}
+
+.idea-card p {
+  margin: 0.5rem 0 0;
+  color: #444;
+  line-height: 1.5;
+}
+
+.no-ideas {
+  text-align: center;
+  color: #777;
+}
+
+@media (max-width: 600px) {
+  .titles {
+    font-size: 1.8rem;
+  }
+
+   .ideas {
+    padding: 1rem;
+  }
+
+  .ideas-form {
+    padding: 1.2rem;
+  }
+
+  .ideas-form input,
+  .ideas-form textarea {
+    font-size: 0.95rem;
+  }
+
+  
+  .ideas-form button {
+    width: 100%;
+  }
+}

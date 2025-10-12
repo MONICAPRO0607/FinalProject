@@ -55,7 +55,7 @@ const Guests = () => {
       <h1 className="names">Confirma tu asistencia</h1>
       <input
         type="text"
-        placeholder="Buscar tu nombre..."
+        placeholder="Escribe tu nombre..."
         value={search}
         onChange={handleSearch}
         className="search-input"

@@ -111,7 +111,7 @@
   z-index: 200;
 }
 
-@media (max-width: 750px) {
+@media (max-width: 1399px) {
   .menu-icon {
     display: block;
   }

@@ -2,100 +2,100 @@ import React, { useState, useEffect } from "react";
 import "./Pictures.css";
 
 const Pictures = () => {
-  const [section, setSection] = useState("antes");
-  const [file, setFile] = useState(null);
-  const [comment, setComment] = useState("");
-  const [gallery, setGallery] = useState({ antes: [], durante: [], despues: [] });
+  const [section, setSection] = useState("Antes");
+  const [photo, setPhoto] = useState(null);
+  const [description, setDescription] = useState("");
+  const [photos, setPhotos] = useState({ Antes: [], Durante: [], Después: [] });
 
   useEffect(() => {
-    const saved = localStorage.getItem("weddingGallery");
-    if (saved) setGallery(JSON.parse(saved));
+    const saved = localStorage.getItem("pictures");
+    if (saved) {
+      setPhotos(JSON.parse(saved));
+    }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("weddingGallery", JSON.stringify(gallery));
-  }, [gallery]);
+    localStorage.setItem("pictures", JSON.stringify(photos));
+  }, [photos]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!file) {
-      alert("Por favor, selecciona una imagen 📸");
+
+    if (!photo) {
+      alert("Por favor selecciona una foto");
       return;
     }
 
-    const newImage = {
+    const newPhoto = {
       id: Date.now(),
-      url: URL.createObjectURL(file),
-      comment,
+      src: URL.createObjectURL(photo),
+      description,
     };
 
-    setGallery((prev) => ({
+    setPhotos((prev) => ({
       ...prev,
-      [section]: [newImage, ...prev[section]],
+      [section]: [newPhoto, ...prev[section]],
     }));
 
-    setFile(null);
-    setComment("");
+    setPhoto(null);
+    setDescription("");
+    e.target.reset();
   };
-
-  const handleChangeSection = (newSection) => setSection(newSection);
 
   return (
     <div className="pictures">
       <h1 className="names">Galería de Recuerdos</h1>
-      <p className="intro">¡Comparte tus mejores momentos con nosotros! 💕</p>
+      <p className="intro">
+        Comparte con nosotros los mejores momentos de antes, durante y después de la boda 💕
+      </p>
 
       <div className="section-tabs">
-        <button
-          onClick={() => handleChangeSection("antes")}
-          className={section === "antes" ? "active" : ""}
-        >
-          🕊️ Antes de la boda
-        </button>
-        <button
-          onClick={() => handleChangeSection("durante")}
-          className={section === "durante" ? "active" : ""}
-        >
-          💒 Durante la boda
-        </button>
-        <button
-          onClick={() => handleChangeSection("despues")}
-          className={section === "despues" ? "active" : ""}
-        >
-          💍 Después de la boda
-        </button>
+        {["Antes", "Durante", "Después"].map((sec) => (
+          <button
+            key={sec}
+            className={section === sec ? "active" : ""}
+            onClick={() => setSection(sec)}
+          >
+            {sec}
+          </button>
+        ))}
       </div>
+
+      <h2 className="section-title">{section} de la boda</h2>
 
       <form className="upload-form" onSubmit={handleSubmit}>
         <label>
-          Sube tu foto:
+          Sube una foto:
           <input
             type="file"
             accept="image/*"
-            onChange={(e) => setFile(e.target.files[0])}
+            onChange={(e) => setPhoto(e.target.files[0])}
+            required
           />
         </label>
 
         <label>
-          Escribe un comentario:
+          Añade una descripción:
           <textarea
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            placeholder="Describe el momento..."
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Cuéntanos el momento..."
           />
         </label>
 
-        <button type="submit">Guardar foto</button>
+        <button type="submit">Subir foto</button>
       </form>
 
       <div className="gallery">
-        {gallery[section].length === 0 ? (
-          <p className="no-photos">Aún no hay fotos en esta sección 📷</p>
+        {photos[section].length === 0 ? (
+          <p className="no-photos">
+            No hay fotos en esta sección aún. ¡Sube la primera!
+          </p>
         ) : (
-          gallery[section].map((img) => (
-            <div key={img.id} className="photo-card">
-              <img src={img.url} alt="Recuerdo" />
-              {img.comment && <p>{img.comment}</p>}
+          photos[section].map((p) => (
+            <div key={p.id} className="photo-card">
+              <img src={p.src} alt="Foto subida" />
+              <p>{p.description}</p>
             </div>
           ))
         )}

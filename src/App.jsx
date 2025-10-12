@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 
@@ -13,6 +13,7 @@ import Ideas from './pages/Ideas/Ideas'
 import Pictures from './pages/Pictures/Pictures'
 import Navbar from './components/NavBar/Navbar'
 import FloatingHearts from './components/FloatingHearts/FloatingHearts'
+
 import './App.css'
 
 const AnimatedRoutes = () => {
@@ -58,5 +59,6 @@ const App = () => {
     </Router>
   )
 }
+
 
 export default App;

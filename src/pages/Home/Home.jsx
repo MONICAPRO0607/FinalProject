@@ -1,11 +1,12 @@
 import Countdown from '../../components/CountDown/countDown';
 import './Home.css';
+// import TestBackend from '../../components/TestBackend/TestBackend';
+
 
 const Home = () => {
   return (
    <div className="home">
      <h1 className="names">Paula y Quique</h1>
-   
    <div className="page home">
       <p>Nos casamos el 5 de Septiembre de 2026</p>
       </div>

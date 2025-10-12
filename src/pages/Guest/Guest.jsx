@@ -48,6 +48,7 @@ const Guests = () => {
   const handleSubmit = () => {
     console.log("Datos guardados:", guest);
     alert("Tus opciones han sido guardadas ✅");
+    
   };
 
   return (

@@ -5,61 +5,59 @@ const Dedications = () => {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [file, setFile] = useState(null);
-  const [fileData, setFileData] = useState(null);
   const [dedications, setDedications] = useState([]);
 
-
   useEffect(() => {
-    const saved = localStorage.getItem("dedications");
-    if (saved) {
-      setDedications(JSON.parse(saved));
-    }
+    const fetchDedications = async () => {
+      try {
+        const res = await fetch("http://localhost:3000/api/dedications");
+        const data = await res.json();
+        setDedications(data);
+      } catch (error) {
+        console.error("Error al obtener dedicatorias:", error);
+      }
+    };
+    fetchDedications();
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("dedications", JSON.stringify(dedications));
-  }, [dedications]);
-
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    setFile(selectedFile);
-
-    if (selectedFile) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFileData(reader.result);
-      };
-      reader.readAsDataURL(selectedFile);
-    }
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!name || !message) {
-      alert("Por favor completa tu nombre y mensaje");
+      alert("Por favor, completa tu nombre y dedicatoria ❤️");
       return;
     }
 
-    const newDedication = {
-      id: Date.now(),
-      name,
-      message,
-      file: fileData || null,
-      fileName: file ? file.name : null,
-    };
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("message", message);
+    if (file) formData.append("file", file);
 
-    setDedications([newDedication, ...dedications]);
-    setName("");
-    setMessage("");
-    setFile(null);
-    setFileData(null);
+    try {
+      const res = await fetch("http://localhost:3000/api/dedications", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setDedications([data, ...dedications]);
+        setName("");
+        setMessage("");
+        setFile(null);
+      } else {
+        alert("Error al enviar la dedicatoria 😔");
+      }
+    } catch (error) {
+      console.error("Error al enviar dedicatoria:", error);
+      alert("Hubo un error al enviar tu dedicatoria 😢");
+    }
   };
 
   return (
     <div className="dedications">
-      <h1 className="names">Dedicatorias</h1>
-      <p>Nos hace mucha ilusión que nos dediques un mensaje, tu mejor recuerdo con nosotros o alguna imagen que quieras que guardemos para siempre. 💞</p>
+      <h1 className="titles">Dedicatorias</h1>
+      <p className="intro">Deja unas palabras especiales para los novios 💕</p>
+
       <form className="dedication-form" onSubmit={handleSubmit}>
         <label>
           Tu nombre:
@@ -72,7 +70,7 @@ const Dedications = () => {
         </label>
 
         <label>
-          Escribe tu mensaje o recuerdo:
+          Tu mensaje:
           <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
@@ -81,11 +79,11 @@ const Dedications = () => {
         </label>
 
         <label>
-          Añadir texto o archivo:
+          Archivo (opcional):
           <input
             type="file"
-            accept="image/*,video/*,.pdf,.txt,.jpg,.png"
-            onChange={handleFileChange}
+            onChange={(e) => setFile(e.target.files[0])}
+            accept="image/*,video/*"
           />
         </label>
 
@@ -93,25 +91,22 @@ const Dedications = () => {
       </form>
 
       <div className="dedication-list">
-        {dedications.length === 0 && <p>No hay dedicatorias aún.</p>}
-        {dedications.map((d) => (
-          <div key={d.id} className="dedication-card">
-            <h3>{d.name}</h3>
-            <p>{d.message}</p>
-            {d.file && (
-              <div className="dedication-file">
-                <p> Archivo adjunto: {d.fileName}</p>
-                {d.file.startsWith("data:image") ? (
-                  <img src={d.file} alt="Archivo adjunto" />
-                ) : (
-                  <a href={d.file} target="_blank" rel="noreferrer">
-                    Ver archivo
-                  </a>
-                )}
-              </div>
-            )}
-          </div>
-        ))}
+        {dedications.length === 0 ? (
+          <p className="no-dedications">Aún no hay dedicatorias 😍</p>
+        ) : (
+          dedications.map((d) => (
+            <div key={d._id} className="dedication-card">
+              <p><strong>{d.name}</strong>: {d.message}</p>
+              {d.file && (
+                <img
+                  src={d.file}
+                  alt="Adjunto"
+                  className="dedication-file"
+                />
+              )}
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

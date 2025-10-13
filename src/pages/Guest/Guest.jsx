@@ -4,51 +4,61 @@ import "./Guest.css";
 const Guests = () => {
   const [search, setSearch] = useState("");
   const [guest, setGuest] = useState(null);
-  const [guests, setGuests] = useState([]);
+  const [searching, setSearching] = useState(false);
 
-  useEffect(() => {
-    const cleanCSVLine = (line) => {
-    return line.split(",").map((item) => item.trim());
-    };
+  const handleSearch = async (e) => {
+    const query = e.target.value;
+    setSearch(query);
+    if (!query) {
+      setGuest(null);
+      return;
+    }
 
-    fetch("/assets/guestsData.csv")
-      .then((res) => res.text())
-      .then((data) => {
-        const parsed = data
-          .split("\n")
-          .slice(1)
-          .map((line) => {
-            const [name, relation, party] = cleanCSVLine(line);
-            return {
-              name,
-              nameNormalized: name.toLowerCase().trim().normalize("NFD").replace(/\p{Diacritic}/gu, ""),
-              relation,
-              party,
-              menu: "",
-              allergies: "",
-              specialNeeds: "",
-              message: "",
-            };
-          });
-        setGuests(parsed);
-      });
-  }, []);
+    setSearching(true);
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/v1/guest/search?name=${encodeURIComponent(query)}`
+      );
 
-  const handleSearch = (e) => {
-    setSearch(e.target.value);
-    const query = e.target.value.toLowerCase().trim().normalize("NFD").replace(/\p{Diacritic}/gu, "");
-    const found = guests.find((g) =>g.nameNormalized.includes(query));
-    setGuest(found || null);
-    };
+      if (res.status === 404) {
+        setGuest(null);
+        setSearching(false);
+        return;
+      }
+
+      const data = await res.json();
+      setGuest(data);
+    } catch (err) {
+      console.error("Error buscando invitado:", err);
+      setGuest(null);
+    } finally {
+      setSearching(false);
+    }
+  };
 
   const handleChange = (field, value) => {
     setGuest({ ...guest, [field]: value });
   };
 
-  const handleSubmit = () => {
-    console.log("Datos guardados:", guest);
-    alert("Tus opciones han sido guardadas ✅");
-    
+  const handleSubmit = async () => {
+    if (!guest) return;
+
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/guest`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(guest),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.message || "Error al guardar los datos");
+
+      alert("Tus opciones han sido guardadas ✅");
+      setGuest(data);
+    } catch (err) {
+      alert("Error al guardar los datos: " + err.message);
+    }
   };
 
   return (
@@ -62,36 +72,48 @@ const Guests = () => {
         className="search-input"
       />
 
+      {searching && <p>Buscando invitado...</p>}
+
       {guest ? (
         <div className="guest-card">
           <h2>{guest.name}</h2>
           <p><strong>Por parte de:</strong> {guest.party}</p>
           <p><strong>Relación:</strong> {guest.relation}</p>
-         
 
           <label>Menú</label>
-          <select value={guest.menu} onChange={(e) => handleChange("menu", e.target.value)}>
+          <select value={guest.menu || ""} onChange={(e) => handleChange("menu", e.target.value)}>
             <option value="">Elegir...</option>
             <option value="Adulto">Adulto</option>
             <option value="Infantil">Infantil</option>
           </select>
 
           <label>Alergias</label>
-          <input type="text" value={guest.allergies} onChange={(e) => handleChange("allergies", e.target.value)} />
+          <input
+            type="text"
+            value={guest.allergies || ""}
+            onChange={(e) => handleChange("allergies", e.target.value)}
+          />
 
           <label>Necesidades especiales</label>
-          <input type="text" value={guest.specialNeeds} onChange={(e) => handleChange("specialNeeds", e.target.value)} />
+          <input
+            type="text"
+            value={guest.specialNeeds || ""}
+            onChange={(e) => handleChange("specialNeeds", e.target.value)}
+          />
 
           <label>Mensaje a los novios</label>
-          <textarea value={guest.message} onChange={(e) => handleChange("message", e.target.value)} />
+          <textarea
+            value={guest.message || ""}
+            onChange={(e) => handleChange("message", e.target.value)}
+          />
 
           <button className="save-btn" onClick={handleSubmit}>Guardar cambios</button>
         </div>
       ) : (
-        search && <p className="no-result">No encontramos tu nombre 😕. Revisa la ortografía.</p>
+        search && !searching && <p className="no-result">No encontramos tu nombre 😕. Revisa la ortografía.</p>
       )}
     </div>
   );
-}
+};
 
 export default Guests;

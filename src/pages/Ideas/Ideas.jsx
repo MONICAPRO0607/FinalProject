@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import './Ideas.css'
+import React, { useState, useEffect } from "react";
+import "./Ideas.css";
 
 const Ideas = () => {
   const [name, setName] = useState("");
@@ -8,45 +8,60 @@ const Ideas = () => {
   const [ideas, setIdeas] = useState([]);
 
   useEffect(() => {
-    const savedIdeas = localStorage.getItem("ideas");
-    if (savedIdeas) {
-      setIdeas(JSON.parse(savedIdeas));
-    }
+    const fetchIdeas = async () => {
+      try {
+        const res = await fetch("http://localhost:3000/api/ideas");
+        const data = await res.json();
+        setIdeas(data);
+      } catch (error) {
+        console.error("Error al cargar ideas:", error);
+      }
+    };
+    fetchIdeas();
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("ideas", JSON.stringify(ideas));
-  }, [ideas]);
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!name || !idea) {
       alert("Por favor completa tu nombre y la idea");
       return;
     }
 
-    const newIdea = {
-      id: Date.now(),
-      name,
-      category,
-      idea,
-    };
+    const newIdea = { name, category, idea };
 
-    setIdeas([newIdea, ...ideas]);
-    setName("");
-    setIdea("");
-    setCategory("Canción");
+    try {
+      const res = await fetch("http://localhost:3000/api/ideas", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newIdea),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setIdeas([data, ...ideas]);
+        setName("");
+        setIdea("");
+        setCategory("Canción");
+      } else {
+        alert("Error al enviar tu idea 😔");
+      }
+    } catch (error) {
+      console.error("Error al enviar idea:", error);
+      alert("Hubo un error al enviar tu idea 😢");
+    }
   };
 
   return (
     <div className="ideas">
       <h1 className="names">Ideas y Recuerdos</h1>
       <p className="intro">
-        Queremos que os animeis a sugerirnos canciones, actividades, juegos o cualquier detalle que pueda hacer aún más especial este gran día.</p>
-        <p>¡Ayúdanos a crear recuerdos inolvidables! 💕</p>
+        ¡Ayúdanos a crear recuerdos inolvidables! 💕  
+        Puedes sugerir canciones, actividades, juegos o cualquier detalle especial.
+      </p>
 
-
-     <form className="ideas-form" onSubmit={handleSubmit}>
+      <form className="ideas-form" onSubmit={handleSubmit}>
         <label>
           Tu nombre:
           <input
@@ -59,7 +74,10 @@ const Ideas = () => {
 
         <label>
           Categoría:
-          <select value={category} onChange={(e) => setCategory(e.target.value)}>
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
             <option value="Canción">Canción</option>
             <option value="Actividad">Actividad</option>
             <option value="Juego">Juego</option>
@@ -85,7 +103,7 @@ const Ideas = () => {
           <p className="no-ideas">Aún no hay ideas. ¡Sé el primero en sugerir algo!</p>
         ) : (
           ideas.map((i) => (
-            <div key={i.id} className="idea-card">
+            <div key={i._id} className="idea-card">
               <h3>{i.category}</h3>
               <p><strong>{i.name}</strong>: {i.idea}</p>
             </div>
@@ -96,4 +114,4 @@ const Ideas = () => {
   );
 };
 
-export default Ideas
+export default Ideas;

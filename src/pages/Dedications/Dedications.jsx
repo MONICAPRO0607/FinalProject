@@ -6,15 +6,20 @@ const Dedications = () => {
   const [message, setMessage] = useState("");
   const [file, setFile] = useState(null);
   const [dedications, setDedications] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchDedications = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/dedications");
+        const res = await fetch("http://localhost:3000/api/v1/dedications");
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
-        setDedications(data);
+        setDedications(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error al obtener dedicatorias:", error);
+        setDedications([]);
+      } finally {
+        setLoading(false);
       }
     };
     fetchDedications();
@@ -33,24 +38,22 @@ const Dedications = () => {
     if (file) formData.append("file", file);
 
     try {
-      const res = await fetch("http://localhost:3000/api/dedications", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/dedications`, {
         method: "POST",
         body: formData,
       });
 
-      if (res.ok) {
-        const data = await res.json();
-        setDedications([data, ...dedications]);
-        setName("");
-        setMessage("");
-        setFile(null);
-      } else {
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
+      const data = await res.json();
+      setDedications([data, ...dedications]);
+      setName("");
+      setMessage("");
+      setFile(null);
+      } catch (error) {
+        console.error("Error al enviar dedicatoria:", error);
         alert("Error al enviar la dedicatoria 😔");
       }
-    } catch (error) {
-      console.error("Error al enviar dedicatoria:", error);
-      alert("Hubo un error al enviar tu dedicatoria 😢");
-    }
   };
 
   return (
@@ -95,7 +98,7 @@ const Dedications = () => {
           <p className="no-dedications">Aún no hay dedicatorias 😍</p>
         ) : (
           dedications.map((d) => (
-            <div key={d._id} className="dedication-card">
+            <div key={d._id || Math.random()} className="dedication-card">
               <p><strong>{d.name}</strong>: {d.message}</p>
               {d.file && (
                 <img

@@ -6,9 +6,7 @@ const Guests = () => {
   const [guest, setGuest] = useState(null);
   const [searching, setSearching] = useState(false);
 
-  const handleSearch = async (e) => {
-    const query = e.target.value;
-    setSearch(query);
+  const handleSearch = async (query) => {
     if (!query) {
       setGuest(null);
       return;
@@ -20,14 +18,18 @@ const Guests = () => {
         `${import.meta.env.VITE_API_URL}/api/v1/guest/search?name=${encodeURIComponent(query)}`
       );
 
-      if (res.status === 404) {
+      if (!res.ok) {
         setGuest(null);
         setSearching(false);
         return;
       }
 
       const data = await res.json();
-      setGuest(data);
+       if (Array.isArray(data)) {
+        setGuest(data.length ? data[0] : null);
+      } else {
+        setGuest(data);
+      }
     } catch (err) {
       console.error("Error buscando invitado:", err);
       setGuest(null);
@@ -36,26 +38,48 @@ const Guests = () => {
     }
   };
 
+   useEffect(() => {
+    const t = setTimeout(() => {
+      if (search !== "") handleSearch(search);
+    }, 200);
+    if (!search) {
+      setGuest(null);
+    }
+    return () => clearTimeout(t);
+  }, [search]);
+
   const handleChange = (field, value) => {
     setGuest({ ...guest, [field]: value });
+  };
+
+   const saveGuest = async (guest) => {
+    const method = guest._id ? "PUT" : "POST";
+    const url = guest._id
+      ? `${import.meta.env.VITE_API_URL}/api/v1/guest/${guest._id}`
+      : `${import.meta.env.VITE_API_URL}/api/v1/guest`;
+
+    const res = await fetch(url, {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(guest),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message || "Error al guardar los datos");
+    }
+
+    setGuest(data);
+    return data;
   };
 
   const handleSubmit = async () => {
     if (!guest) return;
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/guest`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(guest),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.message || "Error al guardar los datos");
-
+      await saveGuest(guest);
       alert("Tus opciones han sido guardadas ✅");
-      setGuest(data);
     } catch (err) {
       alert("Error al guardar los datos: " + err.message);
     }
@@ -68,7 +92,7 @@ const Guests = () => {
         type="text"
         placeholder="Escribe tu nombre..."
         value={search}
-        onChange={handleSearch}
+        onChange={(e) => setSearch(e.target.value)}
         className="search-input"
       />
 
@@ -114,6 +138,7 @@ const Guests = () => {
       )}
     </div>
   );
+  
 };
 
 export default Guests;

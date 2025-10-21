@@ -3,15 +3,13 @@ import { NavLink } from 'react-router-dom'
 import './Navbar.css'
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen)
-  }
+  const closeMenu = () => setMenuOpen(false);
+  const toggleMenu = () => setMenuOpen(!menuOpen);
 
-  const closeMenu = () => {
-    setIsOpen(false)
-  }
+  const query = new URLSearchParams(window.location.search);
+  const showNoviosButton = query.get("novios") === "true";
 
   return (
     <nav className="navbar">
@@ -19,10 +17,10 @@ const Navbar = () => {
         <div className="logo">💞 P y Q</div>
 
         <div className="menu-icon" onClick={toggleMenu}>
-          {isOpen ? '✖' : '☰'}
+          {menuOpen ? '✖' : '☰'}
         </div>
 
-        <ul className={`nav-links ${isOpen ? 'active' : ''}`}>
+        <ul className={`nav-links ${menuOpen ? 'active' : ''}`}>
           <li><NavLink onClick={closeMenu} to="/">Inicio</NavLink></li>
           <li><NavLink onClick={closeMenu} to="/history">Nuestra historia</NavLink></li>
           <li><NavLink onClick={closeMenu} to="/event">El Gran Día</NavLink></li>
@@ -32,10 +30,17 @@ const Navbar = () => {
           <li><NavLink onClick={closeMenu} to="/ideas">Ideas</NavLink></li>
           <li><NavLink onClick={closeMenu} to="/pictures">Fotos</NavLink></li>
           <li><NavLink onClick={closeMenu} to="/gratitudes">Agradecimientos</NavLink></li>
+           {showNoviosButton && (
+            <li>
+              <NavLink onClick={closeMenu} to="/admin" className="nav-novios">
+                Panel Novios 💖
+              </NavLink>
+            </li>
+          )}
         </ul>
       </div>
     </nav>
   )
 }
 
-export default Navbar
+export default Navbar;

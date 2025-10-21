@@ -59,6 +59,7 @@ La idea es que sirva **antes, durante y después del evento**: para compartir re
 - Los nombres de las secciones están bien separados y con efecto de resalte al pasar el ratón.
 - Se puede saltar a cualquier sección desde cualquier página.
 - Cada página tiene una **animación de entrada/salida** suave con `framer-motion`.
+- Si se accede a http://localhost:5173/?novios=true, se mostrará el panel sólo para los novios.
 
 
 ## ⚙️ Tecnologías usadas
@@ -74,24 +75,53 @@ La idea es que sirva **antes, durante y después del evento**: para compartir re
 ## 🧩 Estructura del proyecto
 
 public/assets
+│ └── Logo.png
 src/
 ├── components/
-│ ├── Navbar
 │ └── Countdown
+│ │ ├── Countdown.css
+│ │ └── Countdown.jsx
 │ └── FloatingHearts
+│ │ ├── FloatingHearts.css
+│ │ └── FloatingHearts.jsx
+│ ├── Navbar
+│ │ ├── Navbar.css
+│ │ └── Navbar.jsx
 ├── pages/
-│ ├── Home
-│ ├── History
-│ ├── EventDay
-│ ├── Guest
-│ ├── Gratitudes
-│ ├── Gifts
-│ ├── Dedications
-│ ├── Ideas
+│ └── AdminPanel
+│ │ ├── AdminPanel.css
+│ │ └── AdminPanel.jsx
+│ └── Dedications
+│ │ ├── Dedications.css
+│ │ └── Dedications.jsx
+│ └── EventDay
+│ │ ├── EventDay.css
+│ │ └── EventDay.jsx
+│ └── Gifts
+│ │ ├── Gifts.css
+│ │ └── Gifts.jsx
+│ └── Gratitudes
+│ │ ├── Gratitudes.css
+│ │ └── Gratitudes.jsx
+│ └── Guest
+│ │ ├── Guest.css
+│ │ └── Guest.jsx
+│ └── History
+│ │ ├── History.css
+│ │ └── History.jsx
+│ └── Home
+│ │ └── Home.jsx
+│ └── Ideas
+│ │ ├── Ideas.css
+│ │ └── Ideas.jsx
 │ └── Pictures
+│ │ ├── Pictures.css
+│ │ └── Pictures.jsx
 ├── App.jsx
 ├── App.css
-└── index.js
+├── index.js
+└── main.jsx
+.env
 index.html
 
 

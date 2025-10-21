@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation, } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 
 import Home from './pages/Home/Home'
@@ -13,6 +13,7 @@ import Ideas from './pages/Ideas/Ideas'
 import Pictures from './pages/Pictures/Pictures'
 import Navbar from './components/NavBar/Navbar'
 import FloatingHearts from './components/FloatingHearts/FloatingHearts'
+import AdminPanel from './pages/AdminPanel/AdminPanel'
 
 import './App.css'
 
@@ -22,15 +23,16 @@ const AnimatedRoutes = () => {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
-        <Route path="/history" element={<PageWrapper><History /></PageWrapper>} />
-        <Route path="/event" element={<PageWrapper><EventDay /></PageWrapper>} />
-        <Route path="/gratitudes" element={<PageWrapper><Gratitudes /></PageWrapper>} />
-        <Route path="/guests" element={<PageWrapper><Guests /></PageWrapper>} />
-        <Route path="/gifts" element={<PageWrapper><Gifts /></PageWrapper>} />
-        <Route path="/dedications" element={<PageWrapper><Dedications /></PageWrapper>} />
-        <Route path="/ideas" element={<PageWrapper><Ideas /></PageWrapper>} />
-        <Route path="/pictures" element={<PageWrapper><Pictures /></PageWrapper>} />
+        <Route path="/" element={<Home />} />
+        <Route path="/history" element={<History />} />
+        <Route path="/event" element={<EventDay />} />
+        <Route path="/guests" element={<Guests />} />
+        <Route path="/gifts" element={<Gifts />} />
+        <Route path="/dedications" element={<Dedications />} />
+        <Route path="/ideas" element={<Ideas />} />
+        <Route path="/pictures" element={<Pictures />} />
+        <Route path="/gratitudes" element={<Gratitudes />} />
+        <Route path="/admin" element={<AdminPanel />} /> 
       </Routes>
     </AnimatePresence>
   )

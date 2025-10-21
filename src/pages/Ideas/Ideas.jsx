@@ -6,15 +6,20 @@ const Ideas = () => {
   const [idea, setIdea] = useState("");
   const [category, setCategory] = useState("Canción");
   const [ideas, setIdeas] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchIdeas = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/ideas");
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/ideas`);
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
-        setIdeas(data);
+        setIdeas(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error al cargar ideas:", error);
+        setIdeas([]);
+      } finally {
+        setLoading(false);
       }
     };
     fetchIdeas();
@@ -30,27 +35,23 @@ const Ideas = () => {
     const newIdea = { name, category, idea };
 
     try {
-      const res = await fetch("http://localhost:3000/api/ideas", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/ideas`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newIdea),
       });
 
-      if (res.ok) {
-        const data = await res.json();
-        setIdeas([data, ...ideas]);
-        setName("");
-        setIdea("");
-        setCategory("Canción");
-      } else {
-        alert("Error al enviar tu idea 😔");
+      if (res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
+      const data = await res.json();
+      setIdeas([data, ...ideas]);
+      setName("");
+      setIdea("");
+      setCategory("Canción");
+      } catch (error) {
+        console.error("Error al enviar idea:", error);
+        alert(" Hubo un error al enviar tu idea 😔");
       }
-    } catch (error) {
-      console.error("Error al enviar idea:", error);
-      alert("Hubo un error al enviar tu idea 😢");
-    }
   };
 
   return (
@@ -98,12 +99,14 @@ const Ideas = () => {
         <button type="submit">Enviar idea</button>
       </form>
 
-      <div className="ideas-list">
-        {ideas.length === 0 ? (
+       <div className="ideas-list">
+        {loading ? (
+          <p>Cargando ideas...</p>
+        ) : ideas.length === 0 ? (
           <p className="no-ideas">Aún no hay ideas. ¡Sé el primero en sugerir algo!</p>
         ) : (
-          ideas.map((i) => (
-            <div key={i._id} className="idea-card">
+          ideas.map(i => (
+            <div key={i._id || Math.random()} className="idea-card">
               <h3>{i.category}</h3>
               <p><strong>{i.name}</strong>: {i.idea}</p>
             </div>

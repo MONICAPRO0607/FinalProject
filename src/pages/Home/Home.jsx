@@ -1,6 +1,5 @@
 import Countdown from '../../components/CountDown/countDown';
 import './Home.css';
-// import TestBackend from '../../components/TestBackend/TestBackend';
 
 
 const Home = () => {

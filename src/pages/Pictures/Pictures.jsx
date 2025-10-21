@@ -8,17 +8,20 @@ const Pictures = () => {
   const [photos, setPhotos] = useState({ Antes: [], Durante: [], Después: [] });
 
   useEffect(() => {
-    const saved = localStorage.getItem("pictures");
-    if (saved) {
-      setPhotos(JSON.parse(saved));
-    }
+    fetch(`${import.meta.env.VITE_API_URL}/api/v1/pictures`)
+      .then((res) => res.json())
+      .then((data) => {
+        const grouped = { Antes: [], Durante: [], Después: [] };
+        data.forEach((p) => {
+          if (grouped[p.section]) grouped[p.section].push(p);
+        });
+        setPhotos(grouped);
+      })
+      .catch((err) => console.error("Error cargando fotos:", err));
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("pictures", JSON.stringify(photos));
-  }, [photos]);
-
-  const handleSubmit = (e) => {
+  // 🔹 Subir foto al servidor
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!photo) {
@@ -26,20 +29,34 @@ const Pictures = () => {
       return;
     }
 
-    const newPhoto = {
-      id: Date.now(),
-      src: URL.createObjectURL(photo),
-      description,
-    };
+    const formData = new FormData();
+    formData.append("image", photo);
+    formData.append("comment", description);
+    formData.append("section", section.toLowerCase()); // "antes", "durante", "después"
 
-    setPhotos((prev) => ({
-      ...prev,
-      [section]: [newPhoto, ...prev[section]],
-    }));
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/pictures`, {
+        method: "POST",
+        body: formData,
+      });
 
-    setPhoto(null);
-    setDescription("");
-    e.target.reset();
+      if (!res.ok) throw new Error("Error al subir la foto");
+
+      const data = await res.json();
+
+      // 🔹 Actualizar galería
+      setPhotos((prev) => ({
+        ...prev,
+        [section]: [data, ...prev[section]],
+      }));
+
+      setPhoto(null);
+      setDescription("");
+      e.target.reset();
+    } catch (error) {
+      console.error(error);
+      alert("Hubo un error al subir la foto 😔");
+    }
   };
 
   return (
@@ -93,9 +110,9 @@ const Pictures = () => {
           </p>
         ) : (
           photos[section].map((p) => (
-            <div key={p.id} className="photo-card">
-              <img src={p.src} alt="Foto subida" />
-              <p>{p.description}</p>
+            <div key={p._id || p.id} className="photo-card">
+              <img src={p.imageUrl} alt="Foto subida" />
+              <p>{p.comment}</p>
             </div>
           ))
         )}

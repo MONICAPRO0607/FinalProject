@@ -2,7 +2,7 @@
   background: rgba(255,255,255,0.8);
   backdrop-filter: blur(6px);
   padding: 1rem 2rem;
-  position: fixed;
+  /* position: fixed; */
   top: 0;
   width: 100%;
   display: flex;
@@ -110,6 +110,17 @@
   left: 5px;
   z-index: 200;
 }
+
+.nav-novios {
+  font-weight: 600;
+  color: #ff4f8b !important;
+}
+
+.nav-novios:hover {
+  color: #ff1e70 !important;
+  text-decoration: underline;
+}
+
 
 @media (max-width: 1399px) {
 .navbar ul {

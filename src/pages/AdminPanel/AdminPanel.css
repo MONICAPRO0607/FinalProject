@@ -1,0 +1,78 @@
+.admin-panel {
+  max-width: 1200px; 
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.admin-grid, .admin-gallery {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.admin-section {
+  margin-top: 2rem;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.admin-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  text-align: left;
+}
+
+.admin-card img {
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 0.5rem;
+}
+
+.approve-btn {
+  background-color: #ff70a6;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.approve-btn:hover {
+  background-color: #ff4f8b;
+}
+
+.approved {
+  display: inline-block;
+  color: #2ecc71;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+.admin-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.admin-gallery img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.photo-card p {
+  margin-top: 0.3rem;
+  font-size: 0.9rem;
+}

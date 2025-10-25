@@ -1,27 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Great+Vibes&display=swap');
 
 :root {
-  --background-color-primary: linear-gradient(to bottom right, #a4b4f8, #fff);
+  --background-color-primary: linear-gradient(to bottom, #a4b4f8, #fff);
   --color-letter-primary: #22049c;
   --color-letter-secundary: #c2185b;
   --navbar-height: 72px;
 }
 
+body, .page, .page-transition {
+  font-family: 'Playfair Display', serif !important;
+}
+
 body {
   font-family: 'Playfair Display', serif;
   background: var(--background-color-primary);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  margin: 0;
   margin: 0;
   color: #444;
   overflow-x: hidden;
   text-align: center;
 }
 
-.navbar, .NavBar, .navbar-container { border-bottom: none; box-shadow: none; }
-
-.page-transition {
-  min-height: 100vh;
+.page, .page-transition {
   box-sizing: border-box;
-  padding-top: calc(2rem + var(--navbar-height));
   position: relative;
   z-index: 5;
   display: flex;
@@ -30,17 +35,8 @@ body {
   justify-content: flex-start;
 }
 
-.page {
-  box-sizing: border-box;
-  padding-top: calc(2rem + var(--navbar-height));
-}
-.page > *:first-child,
-.page-transition > *:first-child {
-  margin-top: 0;
-}
-
-
 h1 {
+  font-family: 'Playfair Display', serif;
   font-size: 3rem;
   color: var(--color-letter-primary);
   margin-bottom: 1rem;

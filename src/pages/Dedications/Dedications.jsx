@@ -11,7 +11,7 @@ const Dedications = () => {
   useEffect(() => {
     const fetchDedications = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/v1/dedications");
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/dedications`);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
         setDedications(Array.isArray(data) ? data : []);
@@ -58,7 +58,7 @@ const Dedications = () => {
 
   return (
     <div className="dedications">
-      <h1 className="titles">Dedicatorias</h1>
+      <h1 className="names">Dedicatorias</h1>
       <p className="intro">Deja unas palabras especiales para los novios 💕</p>
 
       <form className="dedication-form" onSubmit={handleSubmit}>

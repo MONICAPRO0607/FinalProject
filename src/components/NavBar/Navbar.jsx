@@ -30,6 +30,7 @@ const Navbar = () => {
           <li><NavLink onClick={closeMenu} to="/ideas">Ideas</NavLink></li>
           <li><NavLink onClick={closeMenu} to="/pictures">Fotos</NavLink></li>
           <li><NavLink onClick={closeMenu} to="/gratitudes">Agradecimientos</NavLink></li>
+          
            {showNoviosButton && (
             <li>
               <NavLink onClick={closeMenu} to="/admin" className="nav-novios">

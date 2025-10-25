@@ -108,6 +108,7 @@ const Guests = () => {
           <select value={guest.menu || ""} onChange={(e) => handleChange("menu", e.target.value)}>
             <option value="">Elegir...</option>
             <option value="Adulto">Adulto</option>
+            <option value="Adolescente">Adolescente</option>
             <option value="Infantil">Infantil</option>
           </select>
 

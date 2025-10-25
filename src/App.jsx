@@ -13,7 +13,8 @@ import Ideas from './pages/Ideas/Ideas'
 import Pictures from './pages/Pictures/Pictures'
 import Navbar from './components/NavBar/Navbar'
 import FloatingHearts from './components/FloatingHearts/FloatingHearts'
-import AdminPanel from './pages/AdminPanel/AdminPanel'
+import AdminPanel from './components/AdminPanel/AdminPanel'
+
 
 import './App.css'
 
@@ -32,8 +33,8 @@ const AnimatedRoutes = () => {
         <Route path="/ideas" element={<Ideas />} />
         <Route path="/pictures" element={<Pictures />} />
         <Route path="/gratitudes" element={<Gratitudes />} />
-        <Route path="/admin" element={<AdminPanel />} /> 
-      </Routes>
+        <Route path="/admin" element={<AdminPanel />} />
+       </Routes>
     </AnimatePresence>
   )
 }
@@ -49,8 +50,8 @@ const PageWrapper = ({ children }) => {
     >
       {children}
     </motion.div>
-  )
-}
+  )}
+
 
 const App = () => {
   return (

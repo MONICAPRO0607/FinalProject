@@ -110,7 +110,6 @@ src/
 │ │ ├── History.css
 │ │ └── History.jsx
 │ └── Home
-
 │ │ └── Home.jsx
 │ └── Ideas
 │ │ ├── Ideas.css

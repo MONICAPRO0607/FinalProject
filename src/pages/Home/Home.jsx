@@ -1,6 +1,4 @@
 import Countdown from '../../components/CountDown/countDown';
-import './Home.css';
-
 
 const Home = () => {
   return (

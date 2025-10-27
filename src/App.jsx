@@ -13,7 +13,7 @@ import Ideas from './pages/Ideas/Ideas'
 import Pictures from './pages/Pictures/Pictures'
 import Navbar from './components/NavBar/Navbar'
 import FloatingHearts from './components/FloatingHearts/FloatingHearts'
-import AdminPanel from './components/AdminPanel/AdminPanel'
+import AdminPanel from './pages/AdminPanel/AdminPanel'
 
 
 import './App.css'

@@ -41,7 +41,6 @@ La idea es que sirva **antes, durante y después del evento**: para compartir re
 ### 💌 Dedications
 - Sección donde amigos y familiares pueden dejar dedicatorias, fotos,vídeos cortos, consejos,...
 
-
 ### 💡 Ideas
 - Espacio para que los invitados sugieran canciones, actividades, juegos...
 
@@ -60,16 +59,6 @@ La idea es que sirva **antes, durante y después del evento**: para compartir re
 - Se puede saltar a cualquier sección desde cualquier página.
 - Cada página tiene una **animación de entrada/salida** suave con `framer-motion`.
 - Si se accede a http://localhost:5173/?novios=true, se mostrará el panel sólo para los novios.
-
-
-## ⚙️ Tecnologías usadas
-
-- [React](https://reactjs.org/)
-- [React Router DOM](https://reactrouter.com/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [Google Fonts](https://fonts.google.com/)
-- CSS puro (sin frameworks externos)
-
 
 
 ## 🧩 Estructura del proyecto

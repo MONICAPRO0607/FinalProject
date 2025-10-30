@@ -13,9 +13,9 @@ const AdminPanel = () => {
   const fetchData = async () => {
     try {
       const [dedRes, ideaRes, fotoRes] = await Promise.all([
-        fetch(`${API_URL}/api/v1/dedications`),
-        fetch(`${API_URL}/api/v1/ideas`),
-        fetch(`${API_URL}/api/v1/pictures`),
+        fetch(`${API_URL}/api/v1/dedication`),
+        fetch(`${API_URL}/api/v1/idea`),
+        fetch(`${API_URL}/api/v1/picture`),
       ]);
 
       if (!dedRes.ok || !ideaRes.ok || !fotoRes.ok)
@@ -56,9 +56,9 @@ const AdminPanel = () => {
     const interval = setInterval(async () => {
       try {
         const [d, i, f] = await Promise.all([
-          fetch(`${API_URL}/api/v1/dedications`).then((r) => r.json()),
-          fetch(`${API_URL}/api/v1/ideas`).then((r) => r.json()),
-          fetch(`${API_URL}/api/v1/pictures`).then((r) => r.json()),
+          fetch(`${API_URL}/api/v1/dedication`).then((r) => r.json()),
+          fetch(`${API_URL}/api/v1/idea`).then((r) => r.json()),
+          fetch(`${API_URL}/api/v1/picture`).then((r) => r.json()),
         ]);
 
         if (d.length > prevCounts.d) {

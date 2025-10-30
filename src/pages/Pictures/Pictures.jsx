@@ -8,7 +8,7 @@ const Pictures = () => {
   const [photos, setPhotos] = useState({ Antes: [], Durante: [], Después: [] });
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/v1/pictures`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/v1/picture`)
       .then((res) => res.json())
       .then((data) => {
         const grouped = { Antes: [], Durante: [], Después: [] };
@@ -35,7 +35,7 @@ const Pictures = () => {
     formData.append("section", section.toLowerCase()); // "antes", "durante", "después"
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/pictures`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/picture`, {
         method: "POST",
         body: formData,
       });

@@ -50,7 +50,7 @@ const AdminPanel = () => {
 
       const [dedRes, ideaRes, fotoRes] = await Promise.all([
         fetch(`${API_URL}/api/v1/dedication`, { headers }),
-        fetch(`${API_URL}/api/v1/idea`, { headers }),
+        fetch(`${API_URL}/api/v1/idea/admin`, { headers }),
         fetch(`${API_URL}/api/v1/picture`, { headers }),
       ]);
 
@@ -69,11 +69,8 @@ const AdminPanel = () => {
       const agrupadas = { Antes: [], Durante: [], Después: [] };
       (fotoData || []).forEach((p) => {
         const key =
-          p.section?.toLowerCase() === "antes"
-            ? "Antes"
-            : p.section?.toLowerCase() === "durante"
-            ? "Durante"
-            : "Después";
+          p.section?.toLowerCase() === "antes"? "Antes"
+            : p.section?.toLowerCase() === "durante"? "Durante": "Después";
         agrupadas[key].push(p);
       });
       setFotos(agrupadas);
@@ -116,7 +113,7 @@ const AdminPanel = () => {
     >
       <header>
         <h1 className="names">Panel de Novios 💖</h1>
-        <p>Aquí veis todo lo que vuestros invitados os han enviado con mucho cariño.</p>
+        <p>Aquí veis todo lo que vuestr@s invitad@s os han enviado con mucho cariño.</p>
         <div className="header-buttons">
           <button className="modo-btn" onClick={() => setModoRomantico(!modoRomantico)}>
             {modoRomantico ? "🌙 Modo oscuro" : "💞 Modo romántico"}

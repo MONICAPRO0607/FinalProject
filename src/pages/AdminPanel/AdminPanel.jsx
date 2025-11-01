@@ -90,7 +90,7 @@ const AdminPanel = () => {
   if (!isLoggedIn) {
     return (
       <div className="login-container">
-        <h2>💖 Panel de Novios - Iniciar Sesión</h2>
+        <h2 className="names">💖Iniciar Sesión</h2>
         <form onSubmit={handleLogin}>
           <input
             type="text"

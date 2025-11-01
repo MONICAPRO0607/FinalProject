@@ -3,24 +3,20 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
   background: transparent;
   color: #333;
   text-align: center;
 }
 
 .login-container h2 {
-  font-family: "Playfair Display", serif;
-  font-size: 1.6rem;
-  color: var(--color-letter-secundary);
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .login-container form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  width: 280px;
+  gap: 20px;
+  width: 300px;
   background: #ffffffd0;
   padding: 2rem;
   border-radius: 16px;

@@ -17,7 +17,7 @@ const Countdown = () => {
           days: Math.floor(difference / (1000 * 60 * 60 * 24)),
           hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
           minutes: Math.floor((difference / (1000 * 60)) % 60),
-          seconds: Math.floor((difference / 1000) % 60),
+          seconds: Math.floor((difference / 1000) % 60)
         })
       } else {
         setTimeLeft({})
@@ -38,7 +38,7 @@ const Countdown = () => {
     const t = setInterval(() => {
       i++
       if (i < full.length) {
-        setTyped(prev => prev + full[i])
+        setTyped((prev) => prev + full[i])
       } else {
         clearInterval(t)
         setTimeout(() => setShowCursor(false), 1000)
@@ -48,15 +48,27 @@ const Countdown = () => {
   }, [])
 
   return (
-    <div className="countdown">
+    <div className='countdown'>
       <h2>💍 Cuenta atrás para el gran día 💕</h2>
 
       {timeLeft.days !== undefined ? (
-        <div className="countdown-boxes">
-          <div><span>{timeLeft.days}</span><small>días</small></div>
-          <div><span>{timeLeft.hours}</span><small>horas</small></div>
-          <div><span>{timeLeft.minutes}</span><small>minutos</small></div>
-          <div><span>{timeLeft.seconds}</span><small>segundos</small></div>
+        <div className='countdown-boxes'>
+          <div>
+            <span>{timeLeft.days}</span>
+            <small>días</small>
+          </div>
+          <div>
+            <span>{timeLeft.hours}</span>
+            <small>horas</small>
+          </div>
+          <div>
+            <span>{timeLeft.minutes}</span>
+            <small>minutos</small>
+          </div>
+          <div>
+            <span>{timeLeft.seconds}</span>
+            <small>segundos</small>
+          </div>
         </div>
       ) : (
         <p>¡Ya llegó el gran día! 🎉</p>
@@ -69,4 +81,4 @@ const Countdown = () => {
   )
 }
 
-export default Countdown
+export default CountDown

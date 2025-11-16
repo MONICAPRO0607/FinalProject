@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import './Countdown.css'
+import './CountDown.css'
 
-const Countdown = () => {
+const CountDown = () => {
   const [timeLeft, setTimeLeft] = useState({})
   const [typed, setTyped] = useState('')
   const [showCursor, setShowCursor] = useState(true)

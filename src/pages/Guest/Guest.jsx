@@ -15,7 +15,7 @@ const Guests = () => {
     setSearching(true);
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/v1/guest/search?name=${encodeURIComponent(query)}`
+        `${import.meta.env.VITE_API_URL}/guest/search?name=${encodeURIComponent(query)}`
       );
 
       if (!res.ok) {
@@ -55,8 +55,8 @@ const Guests = () => {
    const saveGuest = async (guest) => {
     const method = guest._id ? "PUT" : "POST";
     const url = guest._id
-      ? `${import.meta.env.VITE_API_URL}/api/v1/guest/${guest._id}`
-      : `${import.meta.env.VITE_API_URL}/api/v1/guest`;
+      ? `${import.meta.env.VITE_API_URL}/guest/${guest._id}`
+      : `${import.meta.env.VITE_API_URL}/guest`;
 
     const res = await fetch(url, {
       method,

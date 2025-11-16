@@ -11,7 +11,7 @@ const Ideas = () => {
   useEffect(() => {
     const fetchIdeas = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/idea`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/idea`);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
         setIdeas(Array.isArray(data) ? data : []);
@@ -35,7 +35,7 @@ const Ideas = () => {
     const newIdea = { name, category, idea };
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/idea`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/idea`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newIdea),

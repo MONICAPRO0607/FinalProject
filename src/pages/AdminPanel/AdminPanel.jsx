@@ -22,7 +22,7 @@ const AdminPanel = () => {
     setError("");
 
     try {
-      const res = await fetch(`${API_URL}/api/v1/auth/login`, {
+      const res = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -50,10 +50,10 @@ const AdminPanel = () => {
       const headers = { Authorization: `Bearer ${token}` };
 
       const [guestRes, dedRes, ideaRes, fotoRes] = await Promise.all([
-        fetch(`${API_URL}/api/v1/guest`, { headers }),
-        fetch(`${API_URL}/api/v1/dedication`, { headers }),
-        fetch(`${API_URL}/api/v1/idea/admin`, { headers }),
-        fetch(`${API_URL}/api/v1/picture`, { headers }),
+        fetch(`${API_URL}/guest`, { headers }),
+        fetch(`${API_URL}/dedication`, { headers }),
+        fetch(`${API_URL}/idea/admin`, { headers }),
+        fetch(`${API_URL}/picture`, { headers }),
       ]);
 
       if (!guestRes.ok || !dedRes.ok || !ideaRes.ok || !fotoRes.ok)

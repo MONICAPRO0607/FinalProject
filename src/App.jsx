@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 import Home from './pages/Home/Home'
 import History from './pages/History/History'
-import EventDay from './pages/Eventday/EventDay'
+import EventDay from './pages/EventDay/EventDay'
 import Guests from './pages/Guest/Guest'
 import Gifts from './pages/Gifts/Gifts'
 import Gratitudes from './pages/Gratitudes/Gratitudes'

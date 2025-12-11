@@ -6,22 +6,22 @@ const History = () => {
     {
       title: "Cómo nos conocimos 💫",
       text: "Todo comenzó con una mirada... Fue una casualidad, un cruce de caminos que ninguno esperaba, pero que cambió nuestras vidas para siempre.",
-      image: "/assets/history/first-meet.jpg",
+      image: "./assets/conocernos.jpg",
     },
     {
       title: "Nuestro primer viaje juntos ✈️",
       text: "El primer viaje fue una aventura. No todo salió como planeábamos, pero entre risas, canciones y paisajes, aprendimos a disfrutar del camino.",
-      image: "/assets/history/travel.jpg",
+      image: "./assets/viajando.jpg",
     },
     {
       title: "Nuestra primera casa 🏡",
       text: "Dimos el paso de vivir juntos, llenando cada rincón de recuerdos, plantas, fotos y amor. Fue el comienzo de un hogar, no solo una casa.",
-      image: "/assets/history/home.jpg",
+      image: "./assets/Casa.jpg",
     },
     {
       title: "La gran declaración 💍",
       text: "Un momento mágico, inesperado y sincero. Con el corazón latiendo fuerte, una pregunta, una sonrisa, y un ‘sí’ que lo cambió todo.",
-      image: "/assets/history/proposal.jpg",
+      image: "./assets/declaración.jpg",
     },
   ];
 

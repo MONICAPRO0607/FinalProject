@@ -1,12 +1,14 @@
 .navbar {
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(6px);
-  padding: 1rem 2rem;
+  padding: 1.5rem;
+  padding-left: 60px;
   top: 0;
   left: 0;
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
   position: fixed;
   z-index: 100;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -18,7 +20,9 @@
   align-items: center;
   justify-content: space-between;
   max-width: 2000px;
-  margin: 0 auto;
+  width: auto;
+  margin-right: 0 auto;
+  padding: 0 1.5rem;
 }
 
 .nav-links {
@@ -94,7 +98,7 @@
   cursor: pointer;
   display: none; 
   transition: transform 0.3s ease;
-  margin-left: 1rem; 
+  margin-left: auto; 
 }
 
 .menu-icon:hover {
@@ -102,14 +106,14 @@
 }
 
 .logo {
-  font-size: 1.4rem;
+  font-size: 2rem;
   font-weight: bold;
   color: #22049c;
   font-family: 'Great Vibes', cursive;
   letter-spacing: 0.5px;
   position: fixed;
-  top: 10px;
-  left: 5px;
+  top: 15px;
+  left: 15px;
   z-index: 200;
 }
 
@@ -125,13 +129,29 @@
 
 
 @media (max-width: 1399px) {
-.navbar ul {
+.navbar-container {
+  max-width: 2000px;
+  width: 90%;
+}
+
+  .navbar ul {
   gap: 1rem;
+  padding: 0.2rem;
 }}
 
-@media (max-width: 1270px) {
+.logo {
+  font-size: 1.6rem;
+}
+
+@media (max-width: 1294px) {
   .menu-icon {
     display: block;
+    margin-left: auto;
+    padding: 0.5rem 1rem;
+  }
+
+  .navbar {
+    padding: 0.2rem 1.5rem;
   }
 
   .nav-links {
@@ -141,7 +161,7 @@
     left: 0;
     width: 100%;
     flex-direction: column;
-    gap: 5rem;
+    gap: 2.5rem;
     background: rgba(255, 255, 255, 0.95);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -153,6 +173,7 @@
   .nav-links.active {
     opacity: 1;
     pointer-events: all;
+    padding: 2rem 0;
   }
 
   .nav-links li {
@@ -167,7 +188,5 @@
   transition: gap 0.3s ease;
 }
 
-  .logo {
-    font-size: 1.6rem;
-  }
+
 }

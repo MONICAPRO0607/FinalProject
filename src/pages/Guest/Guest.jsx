@@ -154,7 +154,7 @@ const Guests = () => {
           {loading ? "Generando..." : "Generar código"}
         </button>
         {errorGen && <p className="error">{errorGen}</p>}
-        {successMsg && <p className="success">{successMsg}</p>}
+       
       </div>
 
       <div className="guest-card">
@@ -173,6 +173,8 @@ const Guests = () => {
 
       {guest && (
         <div className="guest-card" ref={guestFormRef}>
+        {successMsg && <p className="success">{successMsg}</p>}
+
           <h2>{guest.name}</h2>
           <p><strong>Por parte de:</strong> {guest.party}</p>
           <p><strong>Relación:</strong> {guest.relation}</p>

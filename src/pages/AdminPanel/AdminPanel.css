@@ -89,7 +89,7 @@
 .admin-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
+  gap: 2rem 3.5rem;
   margin-top: 1rem;
   justify-items: center;
 }

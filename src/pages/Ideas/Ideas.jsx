@@ -14,10 +14,16 @@ const Ideas = () => {
   useEffect(() => {
     const fetchIdeas = async () => {
       try {
-        const res = await fetch(`${API_URL}`);
+        const res = await fetch(API_URL);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
-        setIdeas(Array.isArray(data) ? data : []);
+        if (Array.isArray(data)) {
+        setIdeas(data);
+        } else if (Array.isArray(data.ideas)) {
+        setIdeas(data.ideas);
+        } else {
+        setIdeas([]);
+        }
       } catch (error) {
         console.error("Error al cargar ideas:", error);
         setErrorMsg("No se pudieron cargar las ideas. Intenta más tarde.");
@@ -66,7 +72,9 @@ const Ideas = () => {
       setCategory("Canción");
       } catch (error) {
         console.error("Error al enviar idea:", error);
-        alert(" Hubo un error al enviar tu idea 😔");
+        setErrorMsg(
+        error.message || "Hubo un error al enviar tu idea 😔"
+        );
       }
   };
 

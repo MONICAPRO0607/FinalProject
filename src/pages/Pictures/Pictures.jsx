@@ -1,6 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "./Pictures.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+const normalizeSection = (sec) => {
+  if (!sec) return null;
+  const s = sec.toLowerCase();
+  if (s === "antes") return "Antes";
+  if (s === "durante") return "Durante";
+  if (s === "después" || s === "despues") return "Después";
+  return null;
+};
+
 const Pictures = () => {
   const [section, setSection] = useState("Antes");
   const [photo, setPhoto] = useState(null);
@@ -8,19 +19,19 @@ const Pictures = () => {
   const [photos, setPhotos] = useState({ Antes: [], Durante: [], Después: [] });
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/picture`)
+    fetch(`${API_URL}/picture`)
       .then((res) => res.json())
       .then((data) => {
         const grouped = { Antes: [], Durante: [], Después: [] };
         data.forEach((p) => {
-          if (grouped[p.section]) grouped[p.section].push(p);
+          const sec = normalizeSection(p.section);
+          if (sec) grouped[sec].push(p);
         });
         setPhotos(grouped);
       })
       .catch((err) => console.error("Error cargando fotos:", err));
   }, []);
 
-  // 🔹 Subir foto al servidor
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -32,10 +43,10 @@ const Pictures = () => {
     const formData = new FormData();
     formData.append("image", photo);
     formData.append("comment", description);
-    formData.append("section", section.toLowerCase()); // "antes", "durante", "después"
+    formData.append("section", section.toLowerCase()); 
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/picture`, {
+      const res = await fetch(`${API_URL}/picture`, {
         method: "POST",
         body: formData,
       });
@@ -43,11 +54,11 @@ const Pictures = () => {
       if (!res.ok) throw new Error("Error al subir la foto");
 
       const data = await res.json();
+      const normalizedSection = normalizeSection(data.section);
 
-      // 🔹 Actualizar galería
       setPhotos((prev) => ({
         ...prev,
-        [section]: [data, ...prev[section]],
+         [normalizedSection]: [data, ...prev[normalizedSection]],
       }));
 
       setPhoto(null);
@@ -109,10 +120,18 @@ const Pictures = () => {
             No hay fotos en esta sección aún. ¡Sube la primera!
           </p>
         ) : (
-          photos[section].map((p) => (
-            <div key={p._id || p.id} className="photo-card">
-              <img src={p.imageUrl} alt="Foto subida" />
-              <p>{p.comment}</p>
+          photos[section].map((p, index) => (
+            <div key={p._id ?? `${p.imageUrl}-${index}`} className="photo-card">
+               <img
+                src={
+                  p.imageUrl?.startsWith("http")
+                    ? p.imageUrl
+                    : `${API_URL}/${p.imageUrl}`
+                }
+                alt="Foto subida"
+                loading="lazy"
+              />
+              {p.comment && <p>{p.comment}</p>}
             </div>
           ))
         )}

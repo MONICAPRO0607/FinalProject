@@ -20,7 +20,7 @@ const Guests = () => {
 
   const handleGenerateToken = async () => {
     if (!generatedName.trim() || !generatedEmail.trim()) {
-      setErrorGen("Debes escribir tu nombre y correo para generar un código");
+      setErrorGen("Debes escribir tu nombre y correo para generar o recuperar un código");
       setSuccessMsg("");
       return;
     }
@@ -49,11 +49,22 @@ const Guests = () => {
       if (!res.ok) throw new Error(data.message || "Error generando código");
 
       setToken(data.token);
-      setGuest({ name: generatedName.trim(), email: generatedEmail.trim() });
-      
+      setGuest({
+      name: data.name,
+      email: data.email,
+      party: data.party,
+      relation: data.relation,
+      });
+
       localStorage.setItem(
         "guest",
-        JSON.stringify({ name: generatedName.trim(), email: generatedEmail.trim(), token: data.token })
+        JSON.stringify({
+        name: data.name,
+        email: data.email,
+        token: data.token,
+        party: data.party,
+        relation: data.relation,
+      })
       );
       
       setSuccessMsg(`Tu código personal es: ${data.token}. ¡Guárdalo para modificar tus datos!`);
@@ -96,7 +107,6 @@ const Guests = () => {
     setLoading(true);
     setErrorGen("");
     setErrorToken("");
-    // setErrorSearch("");
     setSuccessMsg("");
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/guest/token/${token}`, {
@@ -156,7 +166,7 @@ const Guests = () => {
       </div>
 
       <div className="guest-card">
-        <h3>Si ya tienes tu código personal, introdúcelo aquí:</h3>
+        <h3>Si es tu primera vez o necesitas recuperar tu código personal:</h3>
         <input
           type="text"
           placeholder="Introduce tu código"

@@ -16,7 +16,7 @@ const Ideas = () => {
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
 
-  const API_URL = `${import.meta.env.VITE_API_URL}/idea`;
+  const API_URL = import.meta.env.VITE_API_URL + '/idea';
 
   useEffect(() => {
     const fetchIdeas = async () => {
@@ -69,19 +69,25 @@ const Ideas = () => {
         body: JSON.stringify(newIdea),
       });
 
-      const data = await res.json();
+      const text = await res.text(); 
+      let data;
+      try {
+      data = JSON.parse(text); 
+      } catch (err) {
+      console.error("No es JSON:", text);
+      throw new Error("Respuesta inválida del servidor");
+      }
 
       if (!res.ok) {
-        console.error("Error backend:", data);
-        setErrorMsg(data.message || "Error al crear la idea");
-        return;
+      setErrorMsg(data.message || "Error al crear la idea");
+      return;
       }
 
       setIdeas((prev) => [data, ...prev]);
 
       setName("");
       setIdea("");
-      setCategory("Canción");
+      setCategory("cancion");
 
       } catch (error) {
       console.error("Error real:", error);

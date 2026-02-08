@@ -1,33 +1,36 @@
 import React, { useState, useEffect } from "react";
 import "./Ideas.css";
 
+const CATEGORY_OPTIONS = [
+  { value: "cancion", label: "Canción" },
+  { value: "actividad", label: "Actividad" },
+  { value: "juego", label: "Juego" },
+  { value: "detalle_especial", label: "Detalle especial" },
+];
+
 const Ideas = () => {
   const [name, setName] = useState("");
   const [idea, setIdea] = useState("");
-  const [category, setCategory] = useState("Canción");
+  const [category, setCategory] = useState("cancion");
   const [ideas, setIdeas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
 
-  const API_URL = "https://finalprojectbackend-avve.onrender.com/api/v1/idea";
+  const API_URL = `${import.meta.env.VITE_API_URL}/idea`;
 
   useEffect(() => {
     const fetchIdeas = async () => {
       try {
         const res = await fetch(API_URL);
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        if (!res.ok) throw new Error("Error al cargar ideas");
         const data = await res.json();
-        if (Array.isArray(data)) {
-        setIdeas(data);
-        } else if (Array.isArray(data.ideas)) {
-        setIdeas(data.ideas);
-        } else {
-        setIdeas([]);
-        }
+        setIdeas(Array.isArray(data) ? data : data.ideas || []);
       } catch (error) {
-        console.error("Error al cargar ideas:", error);
-        setErrorMsg("No se pudieron cargar las ideas. Intenta más tarde.");
+        console.error(error);
+        setErrorMsg("No se pudieron cargar las ideas");
         setIdeas([]);
+        
+        
       } finally {
         setLoading(false);
       }
@@ -39,42 +42,50 @@ const Ideas = () => {
     e.preventDefault();
     setErrorMsg("");
 
-    if (!name.trim() || !idea.trim()) {
+    const trimmedName = name.trim();
+    let trimmedIdea = idea.trim();
+    const trimmedCategory = category.trim();
+
+    if (!trimmedName || !trimmedIdea) {
       setErrorMsg("Por favor completa tu nombre y la idea");
       return;
-    }
+    };
 
-    const validCategories = ["Canción", "Actividad", "Juego", "Detalle especial"];
-    if (!validCategories.includes(category)) {
-      setErrorMsg("Categoría inválida");
-      return;
-    }
+    trimmedIdea = trimmedIdea.replace(/"/g, "'");
 
-      const newIdea = { name: name.trim(), idea: idea.trim(), category, message: "" };
+    const newIdea = {
+      name: trimmedName,
+      idea: trimmedIdea,
+      category: trimmedCategory,
+      message: "",
+    };
+
+    console.log("Enviando idea al backend:", newIdea);
 
     try {
-      console.log("Enviando idea:", newIdea);
-      const res = await fetch(`${API_URL}`, {
+      const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newIdea),
       });
 
-      if (!res.ok) {
-         const errData = await res.json();
-         throw new Error(errData.message ||`HTTP error! status: ${res.status}`);
-      }
-        
       const data = await res.json();
-      setIdeas([data, ...ideas]);
+
+      if (!res.ok) {
+        console.error("Error backend:", data);
+        setErrorMsg(data.message || "Error al crear la idea");
+        return;
+      }
+
+      setIdeas((prev) => [data, ...prev]);
+
       setName("");
       setIdea("");
       setCategory("Canción");
+
       } catch (error) {
-        console.error("Error al enviar idea:", error);
-        setErrorMsg(
-        error.message || "Hubo un error al enviar tu idea 😔"
-        );
+      console.error("Error real:", error);
+      setErrorMsg("Error de conexión con el servidor");
       }
   };
 
@@ -88,6 +99,7 @@ const Ideas = () => {
 
       <form className="ideas-form" onSubmit={handleSubmit}>
         {errorMsg && <p className="error">{errorMsg}</p>}
+        
         <label>
           Tu nombre:
           <input
@@ -101,10 +113,9 @@ const Ideas = () => {
         <label>
           Categoría:
           <select value={category} onChange={(e) => setCategory(e.target.value)}>
-            <option value="Canción">Canción</option>
-            <option value="Actividad">Actividad</option>
-            <option value="Juego">Juego</option>
-            <option value="Detalle especial">Detalle especial</option>
+            {CATEGORY_OPTIONS.map(opt => (
+              <option key={opt.value} value={opt.value}>{opt.label}</option>
+            ))}
           </select>
         </label>
 
@@ -129,7 +140,7 @@ const Ideas = () => {
         ) : (
           ideas.map((i) => (
             <div key={i._id || Math.random()} className="idea-card">
-              <h3>{i.category}</h3>
+              <h3>{CATEGORY_OPTIONS.find(opt => opt.value === i.category)?.label || i.category}</h3>
               <p><strong>{i.name}</strong>: {i.idea}</p>
             </div>
           ))

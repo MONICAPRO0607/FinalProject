@@ -18,6 +18,11 @@ import AdminPanel from './pages/AdminPanel/AdminPanel'
 
 import './App.css'
 
+// const PrivateRoute = ({ children }) => {
+//   const guest = localStorage.getItem("guest");
+//   return guest ? children : <Home />;
+// };
+
 const AnimatedRoutes = () => {
   const location = useLocation()
 

@@ -50,8 +50,7 @@ const Gifts = () => {
             <h2>Contribución económica</h2>
           </div>
           <p>
-            Si prefieres apoyarnos con una contribución económica, puedes hacerlo en nuestra cuenta:  
-            <strong>ES12 3456 7890 1234 5678 9012</strong>
+            Si prefieres apoyarnos con una contribución económica para nuestros planes futuros, será muy bien recibida. Te lo ponemos fácil y aceptamos bizum o transferencia bancaria.
           </p>
         </div>
       </div>

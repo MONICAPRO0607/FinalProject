@@ -38,7 +38,6 @@
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  margin-bottom: 1rem;
 }
 
 .icon {
@@ -51,10 +50,11 @@
   font-size: 1.5rem;
 }
 
-/* .gift-card p {
+.gift-card p {
+  margin-top: 1rem;
   font-size: 1rem;
-  /* line-height: 1.5; */
-
+  line-height: 1,5;
+}
 
 strong {
   display: block;

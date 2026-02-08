@@ -69,7 +69,7 @@ h1, h2, h3 {
 
 p {
   font-size: 1.1rem;
-  max-width: 600px;
+  /* max-width: 600px; */
   margin: 0 auto;
   line-height: 1.6;
 }

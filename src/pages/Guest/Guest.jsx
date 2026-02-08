@@ -24,9 +24,17 @@ const Guests = () => {
       setSuccessMsg("");
       return;
     }
+
+    const savedGuest = JSON.parse(localStorage.getItem("guest"));
+    if (savedGuest?.email === generatedEmail.trim()) {
+    setErrorGen("Ya tienes un código generado. Usa el que se te dio anteriormente.");
+    return;
+    }
+
     setLoading(true);
     setErrorGen("");
     setSuccessMsg("");
+
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/guest/generate-token`, {
         method: "POST",
@@ -36,10 +44,18 @@ const Guests = () => {
           email: generatedEmail.trim(),
         }),
       });
+
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Error generando código");
+
       setToken(data.token);
       setGuest({ name: generatedName.trim(), email: generatedEmail.trim() });
+      
+      localStorage.setItem(
+        "guest",
+        JSON.stringify({ name: generatedName.trim(), email: generatedEmail.trim(), token: data.token })
+      );
+      
       setSuccessMsg(`Tu código personal es: ${data.token}. ¡Guárdalo para modificar tus datos!`);
     } catch (err) {
       setErrorGen(err.message);
@@ -58,6 +74,7 @@ const Guests = () => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Código inválido o invitado no encontrado");
       setGuest(data);
+      localStorage.setItem("guest", JSON.stringify(data));
       setToken(inputToken.trim());
     } catch (err) {
       setGuest(null);
@@ -66,25 +83,6 @@ const Guests = () => {
       setLoading(false);
     }
   };
-
-  // const handleSearchByName = async () => {
-  //   if (!search.trim()) return;
-  //   setLoading(true);
-  //   setErrorSearch("");
-  //   setSuccessMsg("");
-  //   try {
-  //     const res = await fetch(`${import.meta.env.VITE_API_URL}/guest/search?name=${encodeURIComponent(search.trim())}`);
-  //     const data = await res.json();
-  //     if (!res.ok) throw new Error(data.message || "Invitado no encontrado");
-  //     setGuest(data);
-  //     setToken(data.token);
-  //   } catch (err) {
-  //     setGuest(null);
-  //     setErrorSearch(err.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   const handleChange = (field, value) => {
     setGuest({ ...guest, [field]: value });
@@ -176,8 +174,8 @@ const Guests = () => {
         {successMsg && <p className="success">{successMsg}</p>}
 
           <h2>{guest.name}</h2>
-          <p><strong>Por parte de:</strong> {guest.party}</p>
-          <p><strong>Relación:</strong> {guest.relation}</p>
+          <p><strong>Por parte de:</strong> {guest.party || "Pendiente de asignar"}</p>
+          <p><strong>Relación:</strong> {guest.relation || "Invitado"}</p>
 
           <label>Menú</label>
           <select value={guest.menu || ""} onChange={(e) => handleChange("menu", e.target.value)}>

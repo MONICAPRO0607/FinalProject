@@ -46,7 +46,9 @@ const Dedications = () => {
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 
       const data = await res.json();
-      setDedications([data, ...dedications]);
+      const resAll = await fetch(`${import.meta.env.VITE_API_URL}/dedication`);
+      const allData = await resAll.json();
+      setDedications(Array.isArray(allData) ? allData : []);
       setName("");
       setMessage("");
       setFile(null);

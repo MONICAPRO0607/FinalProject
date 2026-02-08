@@ -54,7 +54,9 @@ const Pictures = () => {
       if (!res.ok) throw new Error("Error al subir la foto");
 
       const data = await res.json();
-      const normalizedSection = normalizeSection(data.section);
+      const normalizedSection = normalizeSection(data.section) || section;
+
+      if (!normalizedSection) return;
 
       setPhotos((prev) => ({
         ...prev,

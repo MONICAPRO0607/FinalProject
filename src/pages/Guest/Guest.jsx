@@ -166,7 +166,7 @@ const Guests = () => {
       </div>
 
       <div className="guest-card">
-        <h3>Si es tu primera vez o necesitas recuperar tu código personal:</h3>
+        <h3>Introduce aquí tu código personal:</h3>
         <input
           type="text"
           placeholder="Introduce tu código"

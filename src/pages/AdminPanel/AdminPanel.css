@@ -3,24 +3,20 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
   background: transparent;
   color: #333;
   text-align: center;
 }
 
 .login-container h2 {
-  font-family: "Playfair Display", serif;
-  font-size: 1.6rem;
-  color: var(--color-letter-secundary);
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .login-container form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  width: 280px;
+  gap: 20px;
+  width: 300px;
   background: #ffffffd0;
   padding: 2rem;
   border-radius: 16px;
@@ -55,7 +51,6 @@
 
 .admin-panel {
   font-family: "Playfair Display", serif;
-  padding: 2rem 1rem;
   text-align: center;
   max-width: 1200px;
   margin: 0 auto;
@@ -94,7 +89,7 @@
 .admin-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
+  gap: 2rem 3.5rem;
   margin-top: 1rem;
   justify-items: center;
 }
@@ -204,6 +199,26 @@
 .modo-oscuro {
   background-color: #1f1f1f;
   color: blue;
+}
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  flex: 1;
+  padding-right: 2rem;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 0.5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
 }
 
 @keyframes aparecer {

@@ -1,11 +1,10 @@
 .ideas {
-  padding: 2rem;
   max-width: 800px;
   margin: 2rem auto;
   text-align: center;
 }
 
-.titles {
+.names {
   font-family: 'Playfair Display', serif;
   text-align: center;
   font-size: 2.2rem;

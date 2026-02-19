@@ -1,5 +1,4 @@
 .guests-page {
-  padding: 40px 20px;
   max-width: 700px;
   margin: auto;
   text-align: center;
@@ -25,6 +24,16 @@
   border-radius: 2px;
 }
 
+.guest-section {
+  background: #fdfdfd;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  text-align: left;
+  margin-bottom: 25px;
+}
+
+
 .search-input {
   width: 100%;
   padding: 12px;
@@ -33,6 +42,53 @@
   box-sizing: border-box;
   margin-bottom: 20px;
   transition: all 0.2s ease-in-out;
+}
+
+.guest-section h2,
+.guest-section h3 {
+  text-align: center;
+  margin-top: 0;
+  color: var(--color-letter-secundary);
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.guest-section input,
+.guest-section select,
+.guest-section textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  resize: none;
+  font-family: inherit;
+}
+
+.guest-section textarea {
+  min-height: 70px;
+}
+
+.guest-section button {
+  display: block;
+  width: 100%;
+  margin-top: 15px;
+  padding: 12px;
+  background: var(--color-letter-secundary);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.guest-section button:hover {
+  background: var(--color-letter-secundary);
 }
 
 .search-input:focus {
@@ -47,9 +103,10 @@
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   text-align: left;
+  margin-bottom: 25px;
 }
 
-.guest-card h2 {
+.guest-card h2, .guest-card h3 {
   text-align: center;
   margin-top: 0;
   color: var(--color-letter-secundary);
@@ -81,13 +138,41 @@
   box-sizing: border-box;
   resize: none;
   font-family: inherit;
+  margin-bottom: 15px;
 }
 
 .guest-card textarea {
   min-height: 70px;
 }
 
-.save-btn {
+.token-section input,
+.token-section button,
+.token-section input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.token-section button {
+  margin-top: 15px;
+  background: var(--color-letter-secundary);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+}
+
+.token-section button:hover {
+  background: var(--color-letter-secundary);
+}
+
+.save-btn, .guest-card button {
   display: block;
   width: 100%;
   margin-top: 25px;
@@ -102,11 +187,11 @@
   transition: background 0.3s ease;
 }
 
-.save-btn:hover {
+.save-btn:hover, guest-card button:hover {
   background: var(--color-letter-secundary);
 }
 
-p.no-result {
+p.error, p.no-result {
   text-align: center;
   margin-top: 20px;
   font-style: italic;
@@ -124,6 +209,15 @@ p.no-result {
 
   .guest-card {
     padding: 15px;
+  }
+
+  .guest-card input,
+  .guest-card select,
+  .guest-card textarea,
+  .save-btn,
+  .guest-card button {
+    font-size: 14px;
+    padding: 10px;
   }
 
   .search-input {

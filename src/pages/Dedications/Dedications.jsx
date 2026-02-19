@@ -11,7 +11,7 @@ const Dedications = () => {
   useEffect(() => {
     const fetchDedications = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/dedication`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/dedication`);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
         setDedications(Array.isArray(data) ? data : []);
@@ -38,7 +38,7 @@ const Dedications = () => {
     if (file) formData.append("file", file);
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/dedication`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/dedication`, {
         method: "POST",
         body: formData,
       });
@@ -46,7 +46,9 @@ const Dedications = () => {
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 
       const data = await res.json();
-      setDedications([data, ...dedications]);
+      const resAll = await fetch(`${import.meta.env.VITE_API_URL}/dedication`);
+      const allData = await resAll.json();
+      setDedications(Array.isArray(allData) ? allData : []);
       setName("");
       setMessage("");
       setFile(null);

@@ -58,7 +58,7 @@ La idea es que sirva **antes, durante y después del evento**: para compartir re
 - Los nombres de las secciones están bien separados y con efecto de resalte al pasar el ratón.
 - Se puede saltar a cualquier sección desde cualquier página.
 - Cada página tiene una **animación de entrada/salida** suave con `framer-motion`.
-- Si se accede a http://localhost:5173/?novios=true, se mostrará el panel sólo para los novios.
+- Si se accede a localhost:5173/?novios=true, se mostrará el panel sólo para los novios.
 
 
 ## 🧩 Estructura del proyecto

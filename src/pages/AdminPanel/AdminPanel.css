@@ -201,6 +201,26 @@
   color: blue;
 }
 
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  flex: 1;
+  padding-right: 2rem;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 0.5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
 @keyframes aparecer {
   from {
     opacity: 0;

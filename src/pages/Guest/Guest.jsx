@@ -7,6 +7,7 @@ const Guests = () => {
   const [loading, setLoading] = useState(false);
 
   const [inputToken, setInputToken] = useState("");
+  const [emailRecovery, setEmailRecovery] = useState("");
   const [generatedName, setGeneratedName] = useState("");
   const [generatedEmail, setGeneratedEmail] = useState("");
   const [token, setToken] = useState("");
@@ -16,19 +17,15 @@ const Guests = () => {
   const [errorSearch, setErrorSearch] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
 
-  const guestFormRef = React.useRef(null);
+  const successRef = useRef(null);
+
+  const guestFormRef = useRef(null);
 
   const handleGenerateToken = async () => {
     if (!generatedName.trim() || !generatedEmail.trim()) {
       setErrorGen("Debes escribir tu nombre y correo para generar o recuperar un código");
       setSuccessMsg("");
       return;
-    }
-
-    const savedGuest = JSON.parse(localStorage.getItem("guest"));
-    if (savedGuest?.email === generatedEmail.trim()) {
-    setErrorGen("Ya tienes un código generado. Usa el que se te dio anteriormente.");
-    return;
     }
 
     setLoading(true);
@@ -75,6 +72,53 @@ const Guests = () => {
     }
   };
 
+  const handleRecoverToken = async () => {
+    if (!emailRecovery.trim()) {
+      setErrorGen("Debes escribir tu correo para recuperar tu código");
+      setSuccessMsg("");
+      return;
+    }
+    setLoading(true);
+    setErrorGen("");
+    setSuccessMsg("");
+
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/guest/recover-token`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: emailRecovery.trim() }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Error recuperando código");
+
+      setToken(data.token);
+      setGuest({
+        name: data.name,
+        email: data.email,
+        party: data.party,
+        relation: data.relation,
+      });
+
+      localStorage.setItem(
+        "guest",
+        JSON.stringify({
+          name: data.name,
+          email: data.email,
+          token: data.token,
+          party: data.party,
+          relation: data.relation,
+        })
+      );
+
+      setSuccessMsg(`Tu código personal es: ${data.token}. ¡Guárdalo para modificar tus datos!`);
+    } catch (err) {
+      setErrorGen(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleFetchByToken = async () => {
     if (!inputToken.trim()) return;
     setLoading(true);
@@ -84,9 +128,10 @@ const Guests = () => {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/guest/token/${inputToken.trim()}`);
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Código inválido o invitado no encontrado");
+
       setGuest(data);
-      localStorage.setItem("guest", JSON.stringify(data));
       setToken(inputToken.trim());
+      localStorage.setItem("guest", JSON.stringify(data));
     } catch (err) {
       setGuest(null);
       setErrorToken(err.message);
@@ -123,8 +168,19 @@ const Guests = () => {
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Error al guardar los datos");
-      setGuest(data.guest || data);
+
+      const updatedGuest = data.guest || data;
+
+      setGuest(updatedGuest);
+      localStorage.setItem("guest", JSON.stringify(updatedGuest));
       setSuccessMsg("Tus preferencias han sido guardadas ✅");
+
+      setTimeout(() => {
+      if (successRef.current) {
+        successRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+      }
+      }, 50);
+
     } catch (err) {
       setErrorGen(err.message);
     } finally {
@@ -133,16 +189,16 @@ const Guests = () => {
   };
 
   useEffect(() => {
-    if (guest && guestFormRef.current) {
-    guestFormRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (successMsg && successRef.current) {
+      successRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
     }
-    }, [guest]);
+    }, [successMsg]);
 
   return (
     <div className="guests-page">
       <h1 className="names">Confirma tu asistencia</h1>
 
-      <div className="guest-card">
+    <div className="guest-card">
         <h3>Si es tu primera vez, puedes generar tu código personal:</h3>
         <label>Nombre</label>
         <input
@@ -159,10 +215,25 @@ const Guests = () => {
           onChange={(e) => setGeneratedEmail(e.target.value)}
         />
         <button onClick={handleGenerateToken} disabled={loading}>
-          {loading ? "Generando..." : "Generar código"}
+          {loading ? "Procesando..." : "Generar / Recuperar código"}
         </button>
         {errorGen && <p className="error">{errorGen}</p>}
-       
+        {successMsg && !guest && <p ref={successRef} className="success">{successMsg}</p>}
+      </div>
+
+       <div className="guest-card">
+        <h3>Si has olvidado tu código, recupéralo con tu correo:</h3>
+        <input
+          type="email"
+          placeholder="Tu correo"
+          value={emailRecovery}
+          onChange={(e) => setEmailRecovery(e.target.value)}
+        />
+        <button onClick={handleRecoverToken} disabled={loading}>
+          {loading ? "Procesando..." : "Recuperar código"}
+        </button>
+        {errorGen && <p className="error">{errorGen}</p>}
+        {successMsg && !guest && <p ref={successRef} className="success">{successMsg}</p>}
       </div>
 
       <div className="guest-card">
@@ -180,8 +251,8 @@ const Guests = () => {
       </div>
 
       {guest && (
-        <div className="guest-card" ref={guestFormRef}>
-        {successMsg && <p className="success">{successMsg}</p>}
+        <div className="guest-card" 
+        ref={guestFormRef}>
 
           <h2>{guest.name}</h2>
           <p><strong>Por parte de:</strong> {guest.party || "Pendiente de asignar"}</p>
@@ -213,6 +284,12 @@ const Guests = () => {
           <button className="save-btn" onClick={handleSubmit} disabled={loading}>
             {loading ? "Guardando..." : "Guardar cambios"}
           </button>
+
+          {successMsg && (
+            <p ref={successRef} className="success" style={{ marginTop: "20px", textAlign: "center" }}>
+              {successMsg}
+            </p>
+          )}
         </div>
       )}
     </div>

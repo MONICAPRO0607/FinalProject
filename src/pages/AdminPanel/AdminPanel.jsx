@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './AdminPanel.css'
 
-const API_URL = import.meta.env.VITE_API_URL
+const API_URL = import.meta.env.VITE_API_URL;
 
 const AdminPanel = () => {
   const [token, setToken] = useState(localStorage.getItem('token'))
@@ -10,13 +10,15 @@ const AdminPanel = () => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const [invitados, setInvitados] = useState([])
   const [dedicatorias, setDedicatorias] = useState([])
   const [ideas, setIdeas] = useState([])
   const [fotos, setFotos] = useState({ Antes: [], Durante: [], Después: [] })
   const [modoRomantico, setModoRomantico] = useState(true)
-  const [notification, setNotification] = useState('')
-
+  const [loading, setLoading] = useState('')
+  
   const handleLogin = async (e) => {
     e.preventDefault()
     setError('')
@@ -26,45 +28,50 @@ const AdminPanel = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
-      })
+      });
 
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.message || 'Error al iniciar sesión')
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Error al iniciar sesión');
 
-      localStorage.setItem('token', data.token)
-      setToken(data.token)
-      setIsLoggedIn(true)
+      localStorage.setItem('token', data.token);
+      setToken(data.token);
+      setIsLoggedIn(true);
+      setUsername("");
+      setPassword("");
     } catch (err) {
       setError(err.message)
     }
-  }
+  };
 
   const handleLogout = () => {
-    localStorage.removeItem('token')
-    setToken(null)
-    setIsLoggedIn(false)
-  }
+    localStorage.removeItem('token');
+    setToken(null);
+    setIsLoggedIn(false);
+  };
 
   const fetchData = async () => {
+    if (!token) return;
+    setLoading(true);
     try {
       const headers = { Authorization: `Bearer ${token}` }
 
       const [guestRes, dedRes, ideaRes, fotoRes] = await Promise.all([
         fetch(`${API_URL}/guest`, { headers }),
         fetch(`${API_URL}/dedication`, { headers }),
-        fetch(`${API_URL}/idea/admin`, { headers }),
+        fetch(`${API_URL}/idea`, { headers }),
         fetch(`${API_URL}/picture`, { headers })
       ])
 
-      if (!guestRes.ok || !dedRes.ok || !ideaRes.ok || !fotoRes.ok)
-        throw new Error('Error al obtener datos del servidor')
+      if (!guestRes.ok || !dedRes.ok || !ideaRes.ok || !fotoRes.ok){
+        throw new Error('Error al obtener datos del servidor');
+        }
 
       const [guestData, dedData, ideaData, fotoData] = await Promise.all([
         guestRes.json(),
         dedRes.json(),
         ideaRes.json(),
         fotoRes.json()
-      ])
+      ]);
 
       setInvitados(Array.isArray(guestData) ? guestData : [])
       setDedicatorias(Array.isArray(dedData) ? dedData : [])
@@ -82,34 +89,49 @@ const AdminPanel = () => {
       })
       setFotos(agrupadas)
     } catch (err) {
-      console.error('Error al cargar datos:', err)
+      console.error('Error al cargar datos:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    if (isLoggedIn) fetchData()
-  }, [isLoggedIn])
+    if (!isLoggedIn) return;
+    fetchData();
+  }, [isLoggedIn, token]);
 
   if (!isLoggedIn) {
     return (
       <div className='login-container'>
         <h2 className='names'>💖Iniciar Sesión</h2>
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleLogin} className="login-form">
           <input
             type='text'
             placeholder='Usuario'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
+          <div className="password-wrapper">
           <input
-            type='password'
+            type={showPassword ? "text" : "password"}
             placeholder='Contraseña'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type='submit'>Entrar</button>
+          <button
+            type="button"
+            className="toggle-password"
+            onClick={() => setShowPassword(!showPassword)}
+            >
+            {showPassword ? "🙈" : "👁️"}
+          </button>
+          </div>
+
+          <button type="submit">Entrar</button>
+          {error && <p className='error'>{error}</p>}
         </form>
-        {error && <p className='error'>{error}</p>}
+        
       </div>
     )
   }
@@ -123,8 +145,7 @@ const AdminPanel = () => {
       <header>
         <h1 className='names'>Panel de Novios 💖</h1>
         <p>
-          Aquí veis todo lo que vuestr@s invitad@s os han enviado con mucho
-          cariño.
+          Aquí veis todo lo que vuestr@s invitad@s os han enviado con mucho cariño.
         </p>
         <div className='header-buttons'>
           <button
@@ -139,7 +160,13 @@ const AdminPanel = () => {
         </div>
       </header>
 
-      {notification && <div className='notification'>{notification}</div>}
+      {loading && invitados.length === 0 && dedicatorias.length === 0 && ideas.length === 0 && fotos.Antes.length === 0 && fotos.Durante.length === 0 && fotos['Después'].length === 0 && (
+      <p>Cargando datos… ⏳</p>
+      )}
+
+      {error && invitados.length === 0 && dedicatorias.length === 0 && ideas.length === 0 && fotos.Antes.length === 0 && fotos.Durante.length === 0 && fotos['Después'].length === 0 && (
+      <p className="error">{error}</p>
+      )}
 
       <section className='admin-section'>
         <h2>🍽️ Confirmaciones y Menús</h2>
@@ -237,4 +264,4 @@ const AdminPanel = () => {
   )
 }
 
-export default AdminPanel
+export default AdminPanel;
